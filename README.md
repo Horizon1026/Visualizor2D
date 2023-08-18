@@ -14,7 +14,7 @@ A simple mage visualizor for SLAM.
 # Dependence
 Eigen3 (>= 3.3.7)
 glfw3 (for visualization and imgui)
-opengl3 (for imgui)
+opengl3 (for imgui, no dependence if not use imgui)
 
 # Tips
 - 欢迎一起交流学习，不同意商用；

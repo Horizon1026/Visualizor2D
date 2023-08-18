@@ -12,10 +12,16 @@ if ( NOT TARGET lib_slam_visualize )
     add_subdirectory( src ${PROJECT_SOURCE_DIR}/build/lib_slam_visualize )
 endif()
 
+# Add all 3rd libraries.
+if ( NOT TARGET lib_imgui_glfw_opengl )
+    add_subdirectory( 3rd_libraries/imgui ${PROJECT_SOURCE_DIR}/build/lib_imgui_glfw_opengl )
+endif()
+
 # Create executable target to test visualizor.
 add_executable( test_visualizor
     test/test_visualizor.cpp
 )
 target_link_libraries( test_visualizor
     lib_slam_visualize
+    lib_imgui_glfw_opengl
 )
