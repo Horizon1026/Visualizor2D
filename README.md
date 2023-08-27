@@ -2,19 +2,16 @@
 A simple mage visualizor for SLAM.
 
 # Components
-  - [x] Convert matrix to image
-  - [x] Image load.
-  - [x] Image paint.
-  - [x] Image text write.
-  - [x] Image show. (Based on glfw3)
-  - [ ] Image save.
-- [x] 3rd libraries.
-    - [x] imgui based on glfw3 and opengl3
+- [x] Convert matrix to image
+- [x] Image load.
+- [x] Image paint.
+- [x] Image text write.
+- [x] Image show. (Based on glfw3)
+- [ ] Image save.
 
 # Dependence
-Eigen3 (>= 3.3.7)
-glfw3 (for visualization and imgui)
-opengl3 (for imgui, no dependence if not use imgui)
+- Eigen3 (>= 3.3.7)
+- glfw3
 
 # Tips
 - 欢迎一起交流学习，不同意商用；
