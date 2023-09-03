@@ -76,6 +76,10 @@ public:
                                                    const std::vector<uint32_t> &ref_ids_right,
                                                    const std::vector<uint32_t> &cur_ids_left,
                                                    const std::vector<uint32_t> &cur_ids_right,
+                                                   const std::vector<uint8_t> &frame_tracked_status,
+                                                   const std::vector<uint8_t> &ref_stereo_tracked_status,
+                                                   const std::vector<uint8_t> &cur_stereo_tracked_status,
+                                                   uint8_t min_valid_track_status_value = 2,
                                                    const std::vector<uint32_t> &ref_tracked_cnt = std::vector<uint32_t>(),
                                                    const std::vector<Vec2> &cur_optical_velocity = std::vector<Vec2>());
 

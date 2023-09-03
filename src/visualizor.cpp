@@ -185,6 +185,10 @@ void Visualizor::ShowImageWithTrackedFeaturesWithId(const std::string &window_ti
                                                     const std::vector<uint32_t> &ref_ids_right,
                                                     const std::vector<uint32_t> &cur_ids_left,
                                                     const std::vector<uint32_t> &cur_ids_right,
+                                                    const std::vector<uint8_t> &frame_tracked_status,
+                                                    const std::vector<uint8_t> &ref_stereo_tracked_status,
+                                                    const std::vector<uint8_t> &cur_stereo_tracked_status,
+                                                    uint8_t min_valid_track_status_value,
                                                     const std::vector<uint32_t> &ref_tracked_cnt,
                                                     const std::vector<Vec2> &cur_optical_velocity) {
     RETURN_IF(ref_image_left.rows() != cur_image_left.rows() || ref_image_left.cols() != cur_image_left.cols());
@@ -227,19 +231,19 @@ void Visualizor::ShowImageWithTrackedFeaturesWithId(const std::string &window_ti
 
     // [top left] Draw points in reference left image.
     Visualizor::DrawFeaturesWithIdByTrackedNumbers(ref_pixel_uv_left, ref_ids_left, ref_left_offset,
-        status, 2, ref_tracked_cnt, show_image);
+        status, min_valid_track_status_value, ref_tracked_cnt, show_image);
 
     // [top right] Draw points in reference right image.
     Visualizor::DrawFeaturesWithIdByTrackedNumbers(ref_pixel_uv_right, ref_ids_right, ref_right_offset,
-        status, 2, ref_tracked_cnt, show_image);
+        ref_stereo_tracked_status, min_valid_track_status_value, ref_tracked_cnt, show_image);
 
     // [bottom left] Draw points in current left image.
     Visualizor::DrawFeaturesWithIdByOpticalVelocity(cur_pixel_uv_left, cur_ids_left, cur_left_offset,
-        status, 2, cur_optical_velocity, show_image);
+        frame_tracked_status, min_valid_track_status_value, cur_optical_velocity, show_image);
 
     // [bottom right] Draw points in current right image.
     Visualizor::DrawFeaturesWithIdByOpticalVelocity(cur_pixel_uv_right, cur_ids_right, cur_right_offset,
-        status, 2, cur_optical_velocity, show_image);
+        cur_stereo_tracked_status, min_valid_track_status_value, cur_optical_velocity, show_image);
 
     Visualizor::ShowImage(window_title, show_image);
 }
