@@ -26,15 +26,15 @@ if ( NOT TARGET lib_visualize_base_stb )
     add_subdirectory( stb_image ${PROJECT_SOURCE_DIR}/build/lib_visualize_base_stb )
 endif()
 
-add_library( lib_slam_visualize ${AUX_SRC_SLAM_UTILITY_VISUALIZE} )
+add_library( lib_image_visualizor ${AUX_SRC_SLAM_UTILITY_VISUALIZE} )
 
-target_include_directories( lib_slam_visualize PUBLIC
+target_include_directories( lib_image_visualizor PUBLIC
     .
     fonts
     glad+khr
     stb_image
 )
-target_link_libraries( lib_slam_visualize
+target_link_libraries( lib_image_visualizor
     lib_slam_utility_datatype
     lib_slam_utility_log
     lib_slam_utility_memory
@@ -48,15 +48,15 @@ target_link_libraries( lib_slam_visualize
 # Check compile environment. If environment is windows, add additional dependence.
 if ( "${COMPILE_ENV}" STREQUAL "windows" )
     # If environment is windows, add special dependence.
-    target_include_directories( lib_slam_visualize PUBLIC
+    target_include_directories( lib_image_visualizor PUBLIC
         "E:/glfw-3.3.8.bin.WIN64/include"
     )
-    target_link_libraries( lib_slam_visualize
+    target_link_libraries( lib_image_visualizor
         "E:/glfw-3.3.8.bin.WIN64/lib-mingw-w64/glfw3.dll"
     )
 else()
     # If environment is linux, add special dependence.
-    target_link_libraries( lib_slam_visualize
+    target_link_libraries( lib_image_visualizor
         -lglfw
     )
 endif()
