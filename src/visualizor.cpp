@@ -28,15 +28,23 @@ void Visualizor::ShowImageWithDetectedFeatures(const std::string &window_title,
                                                const GrayImage &image,
                                                const std::vector<Vec2> &pixel_uv,
                                                RgbPixel color) {
+    RgbImage show_image;
+    DrawImageWithDetectedFeatures(image, pixel_uv, color, show_image);
+    Visualizor::ShowImage(window_title, show_image);
+}
+
+void Visualizor::DrawImageWithDetectedFeatures(const GrayImage &image,
+                                               const std::vector<Vec2> &pixel_uv,
+                                               RgbPixel color,
+                                               RgbImage &show_image) {
     // Create template rgb image.
     uint8_t *show_ref_image_buf = (uint8_t *)SlamMemory::Malloc(image.rows() * image.cols() * 3);
-    RgbImage show_ref_image(show_ref_image_buf, image.rows(), image.cols(), true);
-    Visualizor::ConvertUint8ToRgb(image.data(), show_ref_image.data(), image.rows() * image.cols());
+    show_image.SetImage(show_ref_image_buf, image.rows(), image.cols(), true);
+    Visualizor::ConvertUint8ToRgb(image.data(), show_image.data(), image.rows() * image.cols());
 
     for (uint32_t i = 0; i < pixel_uv.size(); ++i) {
-        Visualizor::DrawSolidCircle(show_ref_image, pixel_uv[i].x(), pixel_uv[i].y(), 3, color);
+        Visualizor::DrawSolidCircle(show_image, pixel_uv[i].x(), pixel_uv[i].y(), 3, color);
     }
-    Visualizor::ShowImage(window_title, show_ref_image);
 }
 
 void Visualizor::ShowImageWithTrackedFeatures(const std::string &window_title,
@@ -48,24 +56,38 @@ void Visualizor::ShowImageWithTrackedFeatures(const std::string &window_title,
                                               RgbPixel tracked_color,
                                               RgbPixel untracked_color,
                                               RgbPixel flow_line_color) {
+    RgbImage show_image;
+    DrawImageWithTrackedFeatures(cur_image, ref_pixel_uv, cur_pixel_uv, track_status, min_valid_track_status_value,
+        tracked_color, untracked_color, flow_line_color, show_image);
+    Visualizor::ShowImage(window_title, show_image);
+}
+
+void Visualizor::DrawImageWithTrackedFeatures(const GrayImage &cur_image,
+                                              const std::vector<Vec2> &ref_pixel_uv,
+                                              const std::vector<Vec2> &cur_pixel_uv,
+                                              const std::vector<uint8_t> &track_status,
+                                              uint8_t min_valid_track_status_value,
+                                              RgbPixel tracked_color,
+                                              RgbPixel untracked_color,
+                                              RgbPixel flow_line_color,
+                                              RgbImage &show_image) {
     RETURN_IF(cur_image.data() == nullptr);
     RETURN_IF(ref_pixel_uv.size() != cur_pixel_uv.size() || cur_pixel_uv.size() != track_status.size());
 
     // Create template rgb image.
     uint8_t *show_cur_image_buf = (uint8_t *)SlamMemory::Malloc(cur_image.rows() * cur_image.cols() * 3);
-    RgbImage show_cur_image(show_cur_image_buf, cur_image.rows(), cur_image.cols(), true);
-    Visualizor::ConvertUint8ToRgb(cur_image.data(), show_cur_image.data(), cur_image.rows() * cur_image.cols());
+    show_image.SetImage(show_cur_image_buf, cur_image.rows(), cur_image.cols(), true);
+    Visualizor::ConvertUint8ToRgb(cur_image.data(), show_image.data(), cur_image.rows() * cur_image.cols());
 
     for (uint32_t i = 0; i < ref_pixel_uv.size(); ++i) {
         if (track_status[i] > min_valid_track_status_value) {
-            Visualizor::DrawSolidCircle(show_cur_image, cur_pixel_uv[i].x(), cur_pixel_uv[i].y(), 3, untracked_color);
+            Visualizor::DrawSolidCircle(show_image, cur_pixel_uv[i].x(), cur_pixel_uv[i].y(), 3, untracked_color);
             continue;
         }
-        Visualizor::DrawSolidCircle(show_cur_image, cur_pixel_uv[i].x(), cur_pixel_uv[i].y(), 3, tracked_color);
-        Visualizor::DrawBressenhanLine(show_cur_image, ref_pixel_uv[i].x(), ref_pixel_uv[i].y(),
+        Visualizor::DrawSolidCircle(show_image, cur_pixel_uv[i].x(), cur_pixel_uv[i].y(), 3, tracked_color);
+        Visualizor::DrawBressenhanLine(show_image, ref_pixel_uv[i].x(), ref_pixel_uv[i].y(),
             cur_pixel_uv[i].x(), cur_pixel_uv[i].y(), flow_line_color);
     }
-    Visualizor::ShowImage(window_title, show_cur_image);
 }
 
 void Visualizor::ShowImageWithTrackedFeatures(const std::string &window_title,
@@ -77,6 +99,21 @@ void Visualizor::ShowImageWithTrackedFeatures(const std::string &window_title,
                                               uint8_t min_valid_track_status_value,
                                               RgbPixel tracked_color,
                                               RgbPixel untracked_color) {
+    RgbImage show_image;
+    DrawImageWithTrackedFeatures(ref_image, cur_image, ref_pixel_uv, cur_pixel_uv, track_status,
+        min_valid_track_status_value, tracked_color, untracked_color, show_image);
+    Visualizor::ShowImage(window_title, show_image);
+}
+
+void Visualizor::DrawImageWithTrackedFeatures(const GrayImage &ref_image,
+                                              const GrayImage &cur_image,
+                                              const std::vector<Vec2> &ref_pixel_uv,
+                                              const std::vector<Vec2> &cur_pixel_uv,
+                                              const std::vector<uint8_t> &track_status,
+                                              uint8_t min_valid_track_status_value,
+                                              RgbPixel tracked_color,
+                                              RgbPixel untracked_color,
+                                              RgbImage &show_image) {
     RETURN_IF(ref_image.data() == nullptr || cur_image.data() == nullptr);
     RETURN_IF(ref_image.rows() != cur_image.rows() || ref_image.cols() != cur_image.cols());
     RETURN_IF(ref_pixel_uv.size() != cur_pixel_uv.size() || cur_pixel_uv.size() != track_status.size());
@@ -96,7 +133,7 @@ void Visualizor::ShowImageWithTrackedFeatures(const std::string &window_title,
 
     // Construct image to show.
     uint8_t *merged_rgb_buf = (uint8_t *)SlamMemory::Malloc(merged_image.rows() * merged_image.cols() * 3 * sizeof(uint8_t));
-    RgbImage show_image(merged_rgb_buf, merged_image.rows(), merged_image.cols(), true);
+    show_image.SetImage(merged_rgb_buf, merged_image.rows(), merged_image.cols(), true);
     Visualizor::ConvertUint8ToRgb(merged_image.data(), show_image.data(), merged_image.rows() * merged_image.cols());
 
     // Draw untracked current points.
@@ -121,8 +158,6 @@ void Visualizor::ShowImageWithTrackedFeatures(const std::string &window_title,
     for (uint32_t i = 0; i < ref_pixel_uv.size(); ++i) {
         Visualizor::DrawSolidCircle(show_image, ref_pixel_uv[i].x(), ref_pixel_uv[i].y(), 3, tracked_color);
     }
-
-    Visualizor::ShowImage(window_title, show_image);
 }
 
 void Visualizor::ShowImageWithTrackedFeaturesWithId(const std::string &window_title,
@@ -136,6 +171,24 @@ void Visualizor::ShowImageWithTrackedFeaturesWithId(const std::string &window_ti
                                                     uint8_t min_valid_track_status_value,
                                                     const std::vector<uint32_t> &ref_tracked_cnt,
                                                     const std::vector<Vec2> &cur_optical_velocity) {
+    RgbImage show_image;
+    DrawImageWithTrackedFeaturesWithId(ref_image, cur_image, ref_pixel_uv, cur_pixel_uv, ref_ids, cur_ids,
+        tracked_status, min_valid_track_status_value, ref_tracked_cnt, cur_optical_velocity, show_image);
+
+    Visualizor::ShowImage(window_title, show_image);
+}
+
+void Visualizor::DrawImageWithTrackedFeaturesWithId(const GrayImage &ref_image,
+                                                    const GrayImage &cur_image,
+                                                    const std::vector<Vec2> &ref_pixel_uv,
+                                                    const std::vector<Vec2> &cur_pixel_uv,
+                                                    const std::vector<uint32_t> &ref_ids,
+                                                    const std::vector<uint32_t> &cur_ids,
+                                                    const std::vector<uint8_t> &tracked_status,
+                                                    uint8_t min_valid_track_status_value,
+                                                    const std::vector<uint32_t> &ref_tracked_cnt,
+                                                    const std::vector<Vec2> &cur_optical_velocity,
+                                                    RgbImage &show_image) {
     RETURN_IF(ref_image.data() == nullptr || cur_image.data() == nullptr);
     RETURN_IF(ref_image.rows() != cur_image.rows() || ref_image.cols() != cur_image.cols());
     RETURN_IF(ref_pixel_uv.size() != ref_ids.size() || cur_pixel_uv.size() != cur_ids.size());
@@ -155,7 +208,7 @@ void Visualizor::ShowImageWithTrackedFeaturesWithId(const std::string &window_ti
 
     // Construct image to show.
     uint8_t *merged_rgb_buf = (uint8_t *)SlamMemory::Malloc(merged_image.rows() * merged_image.cols() * 3 * sizeof(uint8_t));
-    RgbImage show_image(merged_rgb_buf, merged_image.rows(), merged_image.cols(), true);
+    show_image.SetImage(merged_rgb_buf, merged_image.rows(), merged_image.cols(), true);
     Visualizor::ConvertUint8ToRgb(merged_image.data(), show_image.data(), merged_image.rows() * merged_image.cols());
     Visualizor::DrawString(show_image, "[ref image]", 0, 0, RgbPixel{.r = 200, .g = 150, .b = 255}, 16);
     Visualizor::DrawString(show_image, "[cur image]", ref_image.cols(), 0, RgbPixel{.r = 200, .g = 150, .b = 255}, 16);
@@ -168,8 +221,6 @@ void Visualizor::ShowImageWithTrackedFeaturesWithId(const std::string &window_ti
     // [right] Draw points in current image.
     Visualizor::DrawFeaturesWithIdByOpticalVelocity(cur_pixel_uv, cur_ids, Pixel(cur_image.cols(), 0),
         tracked_status, min_valid_track_status_value, cur_optical_velocity, show_image);
-
-    Visualizor::ShowImage(window_title, show_image);
 }
 
 void Visualizor::ShowImageWithTrackedFeaturesWithId(const std::string &window_title,
@@ -191,6 +242,35 @@ void Visualizor::ShowImageWithTrackedFeaturesWithId(const std::string &window_ti
                                                     uint8_t min_valid_track_status_value,
                                                     const std::vector<uint32_t> &ref_tracked_cnt,
                                                     const std::vector<Vec2> &cur_optical_velocity) {
+    RgbImage show_image;
+    DrawImageWithTrackedFeaturesWithId(ref_image_left, ref_image_right, cur_image_left, cur_image_right,
+        ref_pixel_uv_left, ref_pixel_uv_right, cur_pixel_uv_left, cur_pixel_uv_right,
+        ref_ids_left, ref_ids_right, cur_ids_left, cur_ids_right, frame_tracked_status,
+        ref_stereo_tracked_status, cur_stereo_tracked_status, min_valid_track_status_value,
+        ref_tracked_cnt, cur_optical_velocity, show_image);
+
+    Visualizor::ShowImage(window_title, show_image);
+}
+
+void Visualizor::DrawImageWithTrackedFeaturesWithId(const GrayImage &ref_image_left,
+                                                    const GrayImage &ref_image_right,
+                                                    const GrayImage &cur_image_left,
+                                                    const GrayImage &cur_image_right,
+                                                    const std::vector<Vec2> &ref_pixel_uv_left,
+                                                    const std::vector<Vec2> &ref_pixel_uv_right,
+                                                    const std::vector<Vec2> &cur_pixel_uv_left,
+                                                    const std::vector<Vec2> &cur_pixel_uv_right,
+                                                    const std::vector<uint32_t> &ref_ids_left,
+                                                    const std::vector<uint32_t> &ref_ids_right,
+                                                    const std::vector<uint32_t> &cur_ids_left,
+                                                    const std::vector<uint32_t> &cur_ids_right,
+                                                    const std::vector<uint8_t> &frame_tracked_status,
+                                                    const std::vector<uint8_t> &ref_stereo_tracked_status,
+                                                    const std::vector<uint8_t> &cur_stereo_tracked_status,
+                                                    uint8_t min_valid_track_status_value,
+                                                    const std::vector<uint32_t> &ref_tracked_cnt,
+                                                    const std::vector<Vec2> &cur_optical_velocity,
+                                                    RgbImage &show_image) {
     RETURN_IF(ref_image_left.rows() != cur_image_left.rows() || ref_image_left.cols() != cur_image_left.cols());
     RETURN_IF(ref_image_right.rows() != cur_image_right.rows() || ref_image_right.cols() != cur_image_right.cols());
     RETURN_IF(ref_pixel_uv_left.size() != ref_ids_left.size());
@@ -220,7 +300,7 @@ void Visualizor::ShowImageWithTrackedFeaturesWithId(const std::string &window_ti
 
     // Construct image to show.
     uint8_t *merged_rgb_buf = (uint8_t *)SlamMemory::Malloc(merged_image.rows() * merged_image.cols() * 3 * sizeof(uint8_t));
-    RgbImage show_image(merged_rgb_buf, merged_image.rows(), merged_image.cols(), true);
+    show_image.SetImage(merged_rgb_buf, merged_image.rows(), merged_image.cols(), true);
     Visualizor::ConvertUint8ToRgb(merged_image.data(), show_image.data(), merged_image.rows() * merged_image.cols());
     Visualizor::DrawString(show_image, "[ref left image]", ref_left_offset.x(), ref_left_offset.y(), RgbPixel{.r = 200, .g = 150, .b = 255}, 16);
     Visualizor::DrawString(show_image, "[ref right image]", ref_right_offset.x(), ref_right_offset.y(), RgbPixel{.r = 200, .g = 150, .b = 255}, 16);
@@ -244,8 +324,6 @@ void Visualizor::ShowImageWithTrackedFeaturesWithId(const std::string &window_ti
     // [bottom right] Draw points in current right image.
     Visualizor::DrawFeaturesWithIdByOpticalVelocity(cur_pixel_uv_right, cur_ids_right, cur_right_offset,
         cur_stereo_tracked_status, min_valid_track_status_value, cur_optical_velocity, show_image);
-
-    Visualizor::ShowImage(window_title, show_image);
 }
 
 void Visualizor::DrawFeaturesWithIdByTrackedNumbers(const std::vector<Vec2> &pixel_uv,
