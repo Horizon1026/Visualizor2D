@@ -227,7 +227,7 @@ private:
                                                     RgbImage &image);
 
 private:
-    // Member varibles for image show.
+    // Member variables for image show.
     static std::map<std::string, VisualizorWindow> windows_;
     static bool some_key_pressed_;
 };
