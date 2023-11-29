@@ -3,7 +3,7 @@
 #include "slam_operations.h"
 #include "log_report.h"
 
-namespace SLAM_UTILITY {
+namespace SLAM_VISUALIZOR {
 
 std::map<std::string, VisualizorWindow> Visualizor::windows_;
 bool Visualizor::some_key_pressed_ = false;

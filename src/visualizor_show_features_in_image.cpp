@@ -3,7 +3,7 @@
 #include "slam_operations.h"
 #include "log_report.h"
 
-namespace SLAM_UTILITY {
+namespace SLAM_VISUALIZOR {
 
 namespace {
     constexpr float kStringLocationColOffset = 3.0f;

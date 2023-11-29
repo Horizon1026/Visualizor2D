@@ -5,7 +5,7 @@
 
 #include "unistd.h"
 
-namespace SLAM_UTILITY {
+namespace SLAM_VISUALIZOR {
 
 template bool Visualizor::ShowImage<GrayImage>(const std::string &window_title, const GrayImage &image, bool resizable);
 template bool Visualizor::ShowImage<RgbImage>(const std::string &window_title, const RgbImage &image, bool resizable);

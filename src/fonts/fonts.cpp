@@ -1,6 +1,6 @@
 #include "fonts.h"
 
-namespace SLAM_UTILITY {
+namespace SLAM_VISUALIZOR {
 
 std::array<std::array<uint8_t, 12>, 95> VisualizeFonts::ascii_1206_ = {{
 	{0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00},/*" ",0*/

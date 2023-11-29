@@ -10,6 +10,7 @@
 #include "cstring"
 
 using namespace SLAM_UTILITY;
+using namespace SLAM_VISUALIZOR;
 
 namespace {
     constexpr int32_t kScale = 3;

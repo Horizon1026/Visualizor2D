@@ -4,7 +4,7 @@
 #include "datatype_basic.h"
 #include "array"
 
-namespace SLAM_UTILITY {
+namespace SLAM_VISUALIZOR {
 
 // Class VisualizeFonts Declaration.
 class VisualizeFonts {

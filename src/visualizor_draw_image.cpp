@@ -5,7 +5,7 @@
 #include "slam_memory.h"
 #include "slam_operations.h"
 
-namespace SLAM_UTILITY {
+namespace SLAM_VISUALIZOR {
 
 template void Visualizor::DrawSolidRectangle<GrayImage, uint8_t>(GrayImage &image, int32_t x, int32_t y, int32_t width, int32_t height, const uint8_t &color);
 template void Visualizor::DrawSolidRectangle<RgbImage, RgbPixel>(RgbImage &image, int32_t x, int32_t y, int32_t width, int32_t height, const RgbPixel &color);

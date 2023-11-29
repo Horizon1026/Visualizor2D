@@ -1,5 +1,5 @@
-#ifndef _SLAM_UTILITY_VISUALIZOR_H_
-#define _SLAM_UTILITY_VISUALIZOR_H_
+#ifndef _SLAM_UTILITY_IMAGE_VISUALIZOR_H_
+#define _SLAM_UTILITY_IMAGE_VISUALIZOR_H_
 
 #include "datatype_basic.h"
 #include "datatype_image.h"
@@ -15,7 +15,7 @@
 #include "stdbool.h"
 #include "time.h"
 
-namespace SLAM_UTILITY {
+namespace SLAM_VISUALIZOR {
 
 struct VisualizorWindow {
     GLFWwindow *glfw_window = nullptr;
@@ -234,4 +234,4 @@ private:
 
 }
 
-#endif // end of _SLAM_UTILITY_VISUALIZOR_H_
+#endif // end of _SLAM_UTILITY_IMAGE_VISUALIZOR_H_

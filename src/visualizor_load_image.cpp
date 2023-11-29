@@ -11,7 +11,7 @@
 #include "stb_image.h"
 #include "stb_image_write.h"
 
-namespace SLAM_UTILITY {
+namespace SLAM_VISUALIZOR {
 
 template <>
 bool Visualizor::LoadImage<GrayImage>(const std::string &image_file, GrayImage &image) {

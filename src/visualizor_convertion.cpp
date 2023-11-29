@@ -2,7 +2,7 @@
 #include "log_report.h"
 #include "slam_memory.h"
 
-namespace SLAM_UTILITY {
+namespace SLAM_VISUALIZOR {
 
 void Visualizor::ConvertUint8ToRgb(const uint8_t *gray, uint8_t *rgb, int32_t gray_size) {
     for (int32_t i = 0; i < gray_size; ++i) {
