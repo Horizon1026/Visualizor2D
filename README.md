@@ -10,7 +10,7 @@ A simple mage visualizor for SLAM.
 - [ ] Image save.
 
 # Dependence
-- Eigen3 (>= 3.3.7)
+- Slam_Utility
 - glfw3
 
 # Tips
