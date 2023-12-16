@@ -191,7 +191,6 @@ public:
 
     // Reference for member variables.
     static std::map<std::string, VisualizorWindow> &windows() { return windows_; }
-    static bool &some_key_pressed() { return some_key_pressed_; }
 
 private:
 	Visualizor() = default;
