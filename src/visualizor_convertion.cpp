@@ -96,6 +96,13 @@ bool Visualizor::ConvertMatrixToImage(const TMat<Scalar> &matrix,
             for (int32_t i = 0; i < scale; ++i) {
                 std::fill_n(image.data() + (image_row + i) * image.cols() + image_col, scale, image_value);
             }
+
+            // Draw delete line if value is nan.
+            if (std::isnan(matrix(row, col))) {
+                for (int32_t i = 0; i < scale; ++i) {
+                    *(image.data() + (image_row + i) * image.cols() + image_col + i) = 127;
+                }
+            }
         }
     }
 
