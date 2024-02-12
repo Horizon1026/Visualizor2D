@@ -60,12 +60,12 @@ void TestVisualizorStatic() {
     // Create image of png file.
     RgbImage rgb_image_png;
     Visualizor::LoadImage(png_image_file, rgb_image_png);
-    Visualizor::DrawHollowRectangle(rgb_image_png, 20, 20, 200, 200, RgbPixel{.r = 255, .g = 255, .b = 10});
+    Visualizor::DrawHollowRectangle(rgb_image_png, 20, 20, 200, 200, RgbColor::kYellow);
     for (int32_t i = 0; i < 10; ++i) {
-        Visualizor::DrawNaiveLine(rgb_image_png, 111 - 10 * i, 10 * i, 100, 100, RgbPixel{.r = 10, .g = 255, .b = 10});
+        Visualizor::DrawNaiveLine(rgb_image_png, 111 - 10 * i, 10 * i, 100, 100, RgbColor::kGreen);
     }
-    Visualizor::DrawHollowCircle(rgb_image_png, 130, 200, 10, RgbPixel{.r = 10, .g = 10, .b = 255});
-    Visualizor::DrawString(rgb_image_png, "This is a string.", 0, 0, RgbPixel{.r = 255, .g = 255, .b = 10}, 24);
+    Visualizor::DrawHollowCircle(rgb_image_png, 130, 200, 10, RgbColor::kBlue);
+    Visualizor::DrawString(rgb_image_png, "This is a string.", 0, 0, RgbColor::kYellow, 24);
 
     // Create gray image of png file.
     GrayImage gray_image_png;

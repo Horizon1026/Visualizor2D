@@ -33,7 +33,7 @@ public:
     static void ShowImageWithDetectedFeatures(const std::string &window_title,
                                               const GrayImage &image,
                                               const std::vector<Vec2> &pixel_uv,
-                                              RgbPixel color = RgbPixel{.r = 255, .g = 0, .b = 0});
+                                              RgbPixel color = RgbColor::kRed);
     static void DrawImageWithDetectedFeatures(const GrayImage &image,
                                               const std::vector<Vec2> &pixel_uv,
                                               RgbPixel color,
@@ -44,9 +44,9 @@ public:
                                              const std::vector<Vec2> &cur_pixel_uv,
                                              const std::vector<uint8_t> &track_status,
                                              uint8_t min_valid_track_status_value = 2,
-                                             RgbPixel tracked_color = RgbPixel{.r = 0, .g = 100, .b = 255},
-                                             RgbPixel untracked_color = RgbPixel{.r = 255, .g = 0, .b = 0},
-                                             RgbPixel flow_line_color = RgbPixel{.r = 0, .g = 255, .b = 0});
+                                             RgbPixel tracked_color = RgbColor::kCyan,
+                                             RgbPixel untracked_color = RgbColor::kRed,
+                                             RgbPixel flow_line_color = RgbColor::kGreen);
     static void DrawImageWithTrackedFeatures(const GrayImage &cur_image,
                                              const std::vector<Vec2> &ref_pixel_uv,
                                              const std::vector<Vec2> &cur_pixel_uv,
@@ -63,8 +63,8 @@ public:
                                              const std::vector<Vec2> &cur_pixel_uv,
                                              const std::vector<uint8_t> &track_status,
                                              uint8_t min_valid_track_status_value = 2,
-                                             RgbPixel tracked_color = RgbPixel{.r = 0, .g = 255, .b = 255},
-                                             RgbPixel untracked_color = RgbPixel{.r = 255, .g = 0, .b = 0});
+                                             RgbPixel tracked_color = RgbColor::kCyan,
+                                             RgbPixel untracked_color = RgbColor::kRed);
     static void DrawImageWithTrackedFeatures(const GrayImage &ref_image,
                                              const GrayImage &cur_image,
                                              const std::vector<Vec2> &ref_pixel_uv,

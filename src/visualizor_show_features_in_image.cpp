@@ -196,8 +196,8 @@ void Visualizor::DrawImageWithTrackedFeaturesWithId(const GrayImage &ref_image,
     uint8_t *merged_rgb_buf = (uint8_t *)SlamMemory::Malloc(merged_image.rows() * merged_image.cols() * 3 * sizeof(uint8_t));
     show_image.SetImage(merged_rgb_buf, merged_image.rows(), merged_image.cols(), true);
     Visualizor::ConvertUint8ToRgb(merged_image.data(), show_image.data(), merged_image.rows() * merged_image.cols());
-    Visualizor::DrawString(show_image, "[ref image]", 0, 0, RgbPixel{.r = 200, .g = 150, .b = 255}, 16);
-    Visualizor::DrawString(show_image, "[cur image]", ref_image.cols(), 0, RgbPixel{.r = 200, .g = 150, .b = 255}, 16);
+    Visualizor::DrawString(show_image, "[ref image]", 0, 0, RgbColor::kViolet, 16);
+    Visualizor::DrawString(show_image, "[cur image]", ref_image.cols(), 0, RgbColor::kViolet, 16);
 
     // [left] Draw points in reference image.
     std::vector<uint8_t> empty_tracked_status;
@@ -288,10 +288,10 @@ void Visualizor::DrawImageWithTrackedFeaturesWithId(const GrayImage &ref_image_l
     uint8_t *merged_rgb_buf = (uint8_t *)SlamMemory::Malloc(merged_image.rows() * merged_image.cols() * 3 * sizeof(uint8_t));
     show_image.SetImage(merged_rgb_buf, merged_image.rows(), merged_image.cols(), true);
     Visualizor::ConvertUint8ToRgb(merged_image.data(), show_image.data(), merged_image.rows() * merged_image.cols());
-    Visualizor::DrawString(show_image, "[ref left image]", ref_left_offset.x(), ref_left_offset.y(), RgbPixel{.r = 200, .g = 150, .b = 255}, 16);
-    Visualizor::DrawString(show_image, "[ref right image]", ref_right_offset.x(), ref_right_offset.y(), RgbPixel{.r = 200, .g = 150, .b = 255}, 16);
-    Visualizor::DrawString(show_image, "[cur left image]", cur_left_offset.x(), cur_left_offset.y(), RgbPixel{.r = 200, .g = 150, .b = 255}, 16);
-    Visualizor::DrawString(show_image, "[cur right image]", cur_right_offset.x(), cur_right_offset.y(), RgbPixel{.r = 200, .g = 150, .b = 255}, 16);
+    Visualizor::DrawString(show_image, "[ref left image]", ref_left_offset.x(), ref_left_offset.y(), RgbColor::kViolet, 16);
+    Visualizor::DrawString(show_image, "[ref right image]", ref_right_offset.x(), ref_right_offset.y(), RgbColor::kViolet, 16);
+    Visualizor::DrawString(show_image, "[cur left image]", cur_left_offset.x(), cur_left_offset.y(), RgbColor::kViolet, 16);
+    Visualizor::DrawString(show_image, "[cur right image]", cur_right_offset.x(), cur_right_offset.y(), RgbColor::kViolet, 16);
 
     std::vector<uint8_t> status;
 
@@ -332,7 +332,7 @@ void Visualizor::DrawFeaturesWithIdByTrackedNumbers(const std::vector<Vec2> &pix
         }
     } else {
         // Draw features with fixed color.
-        const RgbPixel pixel_color = RgbPixel{.r = 255, .g = 255, .b = 0};
+        const RgbPixel pixel_color = RgbColor::kYellow;
         for (uint32_t i = 0; i < pixel_uv.size(); ++i) {
             CONTINUE_IF(!status.empty() && status[i] > min_valid_status_value);
 
@@ -350,11 +350,11 @@ void Visualizor::DrawFeaturesWithIdByOpticalVelocity(const std::vector<Vec2> &pi
                                                      const uint8_t min_valid_status_value,
                                                      const std::vector<Vec2> &optical_velocity,
                                                      RgbImage &image) {
-    const RgbPixel pixel_color = RgbPixel{.r = 0, .g = 255, .b = 255};
+    const RgbPixel pixel_color = RgbColor::kCyan;
 
     if (pixel_uv.size() == optical_velocity.size()) {
         // If optical flow velocity of current features is valid, draw the optical flow trajectory.
-        const RgbPixel line_color = RgbPixel{.r = 255, .g = 10, .b = 0};
+        const RgbPixel line_color = RgbColor::kOrangeRed;
         for (uint32_t i = 0; i < pixel_uv.size(); ++i) {
             CONTINUE_IF(!status.empty() && status[i] > min_valid_status_value);
 
