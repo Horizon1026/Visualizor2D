@@ -84,11 +84,11 @@ void TestVisualizorDynamic() {
     ReportInfo(YELLOW ">> Test visualizor show dynamic image." RESET_COLOR);
 
     std::vector<std::string> cam0_filenames;
-    RETURN_IF(!GetFilesInPath("/home/horizon/Desktop/date_sets/euroc/MH_01_easy/mav0/cam0/data", cam0_filenames));
+    RETURN_IF(!GetFilesInPath("D:/My_Github/Datasets/MH_01_easy/mav0/cam0/data", cam0_filenames));
     std::sort(cam0_filenames.begin(), cam0_filenames.end());
 
     std::vector<std::string> cam1_filenames;
-    RETURN_IF(!GetFilesInPath("/home/horizon/Desktop/date_sets/euroc/MH_01_easy/mav0/cam1/data", cam1_filenames));
+    RETURN_IF(!GetFilesInPath("D:/My_Github/Datasets/MH_01_easy/mav0/cam1/data", cam1_filenames));
     std::sort(cam1_filenames.begin(), cam1_filenames.end());
 
     for (uint32_t i = 0; i < 100; ++i) {

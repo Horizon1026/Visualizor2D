@@ -61,6 +61,10 @@ void Visualizor::WaitKey(int32_t delay_ms) {
     for (const auto &item : Visualizor::windows_) {
         const auto &glfw_window = item.second.glfw_window;
         if (!glfwWindowShouldClose(glfw_window)) {
+            // If this window is already shown, do not focus on it.
+            if (glfwGetWindowAttrib(glfw_window, GLFW_FOCUS_ON_SHOW) != GLFW_FALSE) {
+                glfwSetWindowAttrib(glfw_window, GLFW_FOCUS_ON_SHOW, GLFW_FALSE);
+            }
             glfwShowWindow(glfw_window);
         } else {
             glfwHideWindow(glfw_window);
