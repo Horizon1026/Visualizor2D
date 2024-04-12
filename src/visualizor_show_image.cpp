@@ -1,9 +1,12 @@
 #include "visualizor.h"
+#include "image_painter.h"
 #include "log_report.h"
 #include "slam_memory.h"
 #include "slam_operations.h"
 
 #include "unistd.h"
+
+using namespace IMAGE_PAINTER;
 
 namespace SLAM_VISUALIZOR {
 
@@ -102,11 +105,11 @@ void Visualizor::WaitKey(int32_t delay_ms) {
 }
 
 template <> void Visualizor::PreprocessImage<GrayImage>(const GrayImage &image, uint8_t *buff) {
-    Visualizor::ConvertUint8ToRgbAndUpsideDown(image.data(), buff, image.rows(), image.cols());
+    ImagePainter::ConvertUint8ToRgbAndUpsideDown(image.data(), buff, image.rows(), image.cols());
 }
 
 template <> void Visualizor::PreprocessImage<RgbImage>(const RgbImage &image, uint8_t *buff) {
-    Visualizor::ConvertRgbToBgrAndUpsideDown(image.data(), buff, image.rows(), image.cols());
+    ImagePainter::ConvertRgbToBgrAndUpsideDown(image.data(), buff, image.rows(), image.cols());
 }
 
 template void Visualizor::CreateTextureByImage<GrayImage>(const GrayImage &image, GLuint &texture_id);

@@ -11,6 +11,7 @@ A simple mage visualizor for SLAM.
 
 # Dependence
 - Slam_Utility
+- Image_Painter
 - glfw3
 
 # Tips

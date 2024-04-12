@@ -1,5 +1,6 @@
 #include "datatype_basic.h"
 #include "datatype_image.h"
+#include "image_painter.h"
 #include "visualizor.h"
 #include "log_report.h"
 #include "slam_operations.h"
@@ -11,6 +12,7 @@
 
 using namespace SLAM_UTILITY;
 using namespace SLAM_VISUALIZOR;
+using namespace IMAGE_PAINTER;
 
 namespace {
     constexpr int32_t kScale = 3;
@@ -43,37 +45,15 @@ void TestVisualizorStatic() {
     ReportInfo(YELLOW ">> Test visualizor show static image." RESET_COLOR);
     const std::string png_image_file = "../example/image.png";
 
-    // Create image of matrix.
-    Mat matrix = Mat::Identity(kMatrixRow, kMatrixCol) * 10.0f;
-    matrix += Mat::Random(kMatrixRow, kMatrixCol);
-    uint8_t *buf = (uint8_t *)malloc(matrix.rows() * matrix.cols() * kScale * kScale * sizeof(uint8_t));
-    GrayImage image_matrix(buf, matrix.rows() * kScale, matrix.cols() * kScale, true);
-    Visualizor::ConvertMatrixToImage<float>(matrix, image_matrix, 15.0f, kScale);
-    Visualizor::DrawSolidRectangle(image_matrix, 10.1, 10.1, 200, 200, static_cast<uint8_t>(0));
-    for (int32_t i = 0; i < 10; ++i) {
-        Visualizor::DrawBressenhanLine(image_matrix, 111 - 10 * i, 10 * i, 100, 100, static_cast<uint8_t>(255));
-    }
-    Visualizor::DrawSolidCircle(image_matrix, 130, 200, 10, static_cast<uint8_t>(127));
-    Visualizor::DrawString(image_matrix, "This is a string.", 240, 100 - 16, static_cast<uint8_t>(0), 99);
-    Visualizor::DrawString(image_matrix, "This is a string.", 240, 100, static_cast<uint8_t>(127), 16);
-
-    // Create image of png file.
+    // Create rgb image from png file.
     RgbImage rgb_image_png;
     Visualizor::LoadImage(png_image_file, rgb_image_png);
-    Visualizor::DrawHollowRectangle(rgb_image_png, 20, 20, 200, 200, RgbColor::kYellow);
-    for (int32_t i = 0; i < 10; ++i) {
-        Visualizor::DrawNaiveLine(rgb_image_png, 111 - 10 * i, 10 * i, 100, 100, RgbColor::kGreen);
-    }
-    Visualizor::DrawHollowCircle(rgb_image_png, 130, 200, 10, RgbColor::kBlue);
-    Visualizor::DrawString(rgb_image_png, "This is a string.", 0, 0, RgbColor::kYellow, 24);
 
-    // Create gray image of png file.
+    // Create gray image from png file.
     GrayImage gray_image_png;
-    Visualizor::LoadImage("../example/image.png", gray_image_png);
+    Visualizor::LoadImage(png_image_file, gray_image_png);
 
     // Test visualizor.
-    Visualizor::ShowImage("Matrix image", image_matrix);
-    Visualizor::WaitKey(1);
     Visualizor::ShowImage("Gray Png Image", gray_image_png);
     Visualizor::WaitKey(1);
     Visualizor::ShowImage("Rgb Png Image", rgb_image_png);

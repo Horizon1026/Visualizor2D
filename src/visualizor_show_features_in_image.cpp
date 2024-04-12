@@ -1,7 +1,10 @@
 #include "visualizor.h"
+#include "image_painter.h"
 #include "slam_memory.h"
 #include "slam_operations.h"
 #include "log_report.h"
+
+using namespace IMAGE_PAINTER;
 
 namespace SLAM_VISUALIZOR {
 
@@ -26,10 +29,10 @@ void Visualizor::DrawImageWithDetectedFeatures(const GrayImage &image,
     // Create template rgb image.
     uint8_t *show_ref_image_buf = (uint8_t *)SlamMemory::Malloc(image.rows() * image.cols() * 3);
     show_image.SetImage(show_ref_image_buf, image.rows(), image.cols(), true);
-    Visualizor::ConvertUint8ToRgb(image.data(), show_image.data(), image.rows() * image.cols());
+    ImagePainter::ConvertUint8ToRgb(image.data(), show_image.data(), image.rows() * image.cols());
 
     for (uint32_t i = 0; i < pixel_uv.size(); ++i) {
-        Visualizor::DrawSolidCircle(show_image, pixel_uv[i].x(), pixel_uv[i].y(), 3, color);
+        ImagePainter::DrawSolidCircle(show_image, pixel_uv[i].x(), pixel_uv[i].y(), 3, color);
     }
 }
 
@@ -63,15 +66,15 @@ void Visualizor::DrawImageWithTrackedFeatures(const GrayImage &cur_image,
     // Create template rgb image.
     uint8_t *show_cur_image_buf = (uint8_t *)SlamMemory::Malloc(cur_image.rows() * cur_image.cols() * 3);
     show_image.SetImage(show_cur_image_buf, cur_image.rows(), cur_image.cols(), true);
-    Visualizor::ConvertUint8ToRgb(cur_image.data(), show_image.data(), cur_image.rows() * cur_image.cols());
+    ImagePainter::ConvertUint8ToRgb(cur_image.data(), show_image.data(), cur_image.rows() * cur_image.cols());
 
     for (uint32_t i = 0; i < ref_pixel_uv.size(); ++i) {
         if (track_status[i] > min_valid_track_status_value) {
-            Visualizor::DrawSolidCircle(show_image, cur_pixel_uv[i].x(), cur_pixel_uv[i].y(), 3, untracked_color);
+            ImagePainter::DrawSolidCircle(show_image, cur_pixel_uv[i].x(), cur_pixel_uv[i].y(), 3, untracked_color);
             continue;
         }
-        Visualizor::DrawSolidCircle(show_image, cur_pixel_uv[i].x(), cur_pixel_uv[i].y(), 3, tracked_color);
-        Visualizor::DrawBressenhanLine(show_image, ref_pixel_uv[i].x(), ref_pixel_uv[i].y(),
+        ImagePainter::DrawSolidCircle(show_image, cur_pixel_uv[i].x(), cur_pixel_uv[i].y(), 3, tracked_color);
+        ImagePainter::DrawBressenhanLine(show_image, ref_pixel_uv[i].x(), ref_pixel_uv[i].y(),
             cur_pixel_uv[i].x(), cur_pixel_uv[i].y(), flow_line_color);
     }
 }
@@ -120,20 +123,20 @@ void Visualizor::DrawImageWithTrackedFeatures(const GrayImage &ref_image,
     // Construct image to show.
     uint8_t *merged_rgb_buf = (uint8_t *)SlamMemory::Malloc(merged_image.rows() * merged_image.cols() * 3 * sizeof(uint8_t));
     show_image.SetImage(merged_rgb_buf, merged_image.rows(), merged_image.cols(), true);
-    Visualizor::ConvertUint8ToRgb(merged_image.data(), show_image.data(), merged_image.rows() * merged_image.cols());
+    ImagePainter::ConvertUint8ToRgb(merged_image.data(), show_image.data(), merged_image.rows() * merged_image.cols());
 
     // Draw untracked current points.
     for (uint32_t i = 0; i < cur_pixel_uv.size(); ++i) {
         if (track_status[i] > min_valid_track_status_value) {
-            Visualizor::DrawSolidCircle(show_image, cur_pixel_uv[i].x() + cur_image.cols(), cur_pixel_uv[i].y(), 3, untracked_color);
+            ImagePainter::DrawSolidCircle(show_image, cur_pixel_uv[i].x() + cur_image.cols(), cur_pixel_uv[i].y(), 3, untracked_color);
         }
     }
 
     // Draw tracked current points and pairs.
     for (uint32_t i = 0; i < cur_pixel_uv.size(); ++i) {
         CONTINUE_IF(track_status[i] > min_valid_track_status_value);
-        Visualizor::DrawSolidCircle(show_image, cur_pixel_uv[i].x() + cur_image.cols(), cur_pixel_uv[i].y(), 3, tracked_color);
-        Visualizor::DrawBressenhanLine(show_image, ref_pixel_uv[i].x(), ref_pixel_uv[i].y(),
+        ImagePainter::DrawSolidCircle(show_image, cur_pixel_uv[i].x() + cur_image.cols(), cur_pixel_uv[i].y(), 3, tracked_color);
+        ImagePainter::DrawBressenhanLine(show_image, ref_pixel_uv[i].x(), ref_pixel_uv[i].y(),
             cur_pixel_uv[i].x() + cur_image.cols(), cur_pixel_uv[i].y(),
             RgbPixel{.r = static_cast<uint8_t>(std::rand() % 256),
                      .g = static_cast<uint8_t>(std::rand() % 256),
@@ -142,7 +145,7 @@ void Visualizor::DrawImageWithTrackedFeatures(const GrayImage &ref_image,
 
     // Draw reference points.
     for (uint32_t i = 0; i < ref_pixel_uv.size(); ++i) {
-        Visualizor::DrawSolidCircle(show_image, ref_pixel_uv[i].x(), ref_pixel_uv[i].y(), 3, tracked_color);
+        ImagePainter::DrawSolidCircle(show_image, ref_pixel_uv[i].x(), ref_pixel_uv[i].y(), 3, tracked_color);
     }
 }
 
@@ -195,9 +198,9 @@ void Visualizor::DrawImageWithTrackedFeaturesWithId(const GrayImage &ref_image,
     // Construct image to show.
     uint8_t *merged_rgb_buf = (uint8_t *)SlamMemory::Malloc(merged_image.rows() * merged_image.cols() * 3 * sizeof(uint8_t));
     show_image.SetImage(merged_rgb_buf, merged_image.rows(), merged_image.cols(), true);
-    Visualizor::ConvertUint8ToRgb(merged_image.data(), show_image.data(), merged_image.rows() * merged_image.cols());
-    Visualizor::DrawString(show_image, "[ref image]", 0, 0, RgbColor::kViolet, 16);
-    Visualizor::DrawString(show_image, "[cur image]", ref_image.cols(), 0, RgbColor::kViolet, 16);
+    ImagePainter::ConvertUint8ToRgb(merged_image.data(), show_image.data(), merged_image.rows() * merged_image.cols());
+    ImagePainter::DrawString(show_image, "[ref image]", 0, 0, RgbColor::kViolet, 16);
+    ImagePainter::DrawString(show_image, "[cur image]", ref_image.cols(), 0, RgbColor::kViolet, 16);
 
     // [left] Draw points in reference image.
     std::vector<uint8_t> empty_tracked_status;
@@ -287,11 +290,11 @@ void Visualizor::DrawImageWithTrackedFeaturesWithId(const GrayImage &ref_image_l
     // Construct image to show.
     uint8_t *merged_rgb_buf = (uint8_t *)SlamMemory::Malloc(merged_image.rows() * merged_image.cols() * 3 * sizeof(uint8_t));
     show_image.SetImage(merged_rgb_buf, merged_image.rows(), merged_image.cols(), true);
-    Visualizor::ConvertUint8ToRgb(merged_image.data(), show_image.data(), merged_image.rows() * merged_image.cols());
-    Visualizor::DrawString(show_image, "[ref left image]", ref_left_offset.x(), ref_left_offset.y(), RgbColor::kViolet, 16);
-    Visualizor::DrawString(show_image, "[ref right image]", ref_right_offset.x(), ref_right_offset.y(), RgbColor::kViolet, 16);
-    Visualizor::DrawString(show_image, "[cur left image]", cur_left_offset.x(), cur_left_offset.y(), RgbColor::kViolet, 16);
-    Visualizor::DrawString(show_image, "[cur right image]", cur_right_offset.x(), cur_right_offset.y(), RgbColor::kViolet, 16);
+    ImagePainter::ConvertUint8ToRgb(merged_image.data(), show_image.data(), merged_image.rows() * merged_image.cols());
+    ImagePainter::DrawString(show_image, "[ref left image]", ref_left_offset.x(), ref_left_offset.y(), RgbColor::kViolet, 16);
+    ImagePainter::DrawString(show_image, "[ref right image]", ref_right_offset.x(), ref_right_offset.y(), RgbColor::kViolet, 16);
+    ImagePainter::DrawString(show_image, "[cur left image]", cur_left_offset.x(), cur_left_offset.y(), RgbColor::kViolet, 16);
+    ImagePainter::DrawString(show_image, "[cur right image]", cur_right_offset.x(), cur_right_offset.y(), RgbColor::kViolet, 16);
 
     std::vector<uint8_t> status;
 
@@ -326,8 +329,8 @@ void Visualizor::DrawFeaturesWithIdByTrackedNumbers(const std::vector<Vec2> &pix
 
             const int32_t color = std::max(static_cast<int32_t>(255 - tracked_cnt[i] * 80), static_cast<int32_t>(0));
             const RgbPixel pixel_color = RgbPixel{.r = 255, .g = static_cast<uint8_t>(255 - color), .b = 0};
-            Visualizor::DrawSolidCircle(image, pixel_uv[i].x() + pixel_offset.x(), pixel_uv[i].y() + pixel_offset.y(), 3, pixel_color);
-            Visualizor::DrawString(image, std::to_string(ids[i]), pixel_uv[i].x() + kStringLocationColOffset + pixel_offset.x(),
+            ImagePainter::DrawSolidCircle(image, pixel_uv[i].x() + pixel_offset.x(), pixel_uv[i].y() + pixel_offset.y(), 3, pixel_color);
+            ImagePainter::DrawString(image, std::to_string(ids[i]), pixel_uv[i].x() + kStringLocationColOffset + pixel_offset.x(),
                 pixel_uv[i].y() + kStringLocationRowOffset + pixel_offset.y(), pixel_color);
         }
     } else {
@@ -336,8 +339,8 @@ void Visualizor::DrawFeaturesWithIdByTrackedNumbers(const std::vector<Vec2> &pix
         for (uint32_t i = 0; i < pixel_uv.size(); ++i) {
             CONTINUE_IF(!status.empty() && status[i] > min_valid_status_value);
 
-            Visualizor::DrawSolidCircle(image, pixel_uv[i].x() + pixel_offset.x(), pixel_uv[i].y() + pixel_offset.y(), 3, pixel_color);
-            Visualizor::DrawString(image, std::to_string(ids[i]), pixel_uv[i].x() + kStringLocationColOffset + pixel_offset.x(),
+            ImagePainter::DrawSolidCircle(image, pixel_uv[i].x() + pixel_offset.x(), pixel_uv[i].y() + pixel_offset.y(), 3, pixel_color);
+            ImagePainter::DrawString(image, std::to_string(ids[i]), pixel_uv[i].x() + kStringLocationColOffset + pixel_offset.x(),
                 pixel_uv[i].y() + kStringLocationRowOffset + pixel_offset.y(), pixel_color);
         }
     }
@@ -358,10 +361,10 @@ void Visualizor::DrawFeaturesWithIdByOpticalVelocity(const std::vector<Vec2> &pi
         for (uint32_t i = 0; i < pixel_uv.size(); ++i) {
             CONTINUE_IF(!status.empty() && status[i] > min_valid_status_value);
 
-            Visualizor::DrawSolidCircle(image, pixel_uv[i].x() + pixel_offset.x(), pixel_uv[i].y() + pixel_offset.y(), 3, pixel_color);
-            Visualizor::DrawString(image, std::to_string(ids[i]), pixel_uv[i].x() + kStringLocationColOffset + pixel_offset.x(),
+            ImagePainter::DrawSolidCircle(image, pixel_uv[i].x() + pixel_offset.x(), pixel_uv[i].y() + pixel_offset.y(), 3, pixel_color);
+            ImagePainter::DrawString(image, std::to_string(ids[i]), pixel_uv[i].x() + kStringLocationColOffset + pixel_offset.x(),
                 pixel_uv[i].y() + kStringLocationRowOffset + pixel_offset.y(), pixel_color);
-            Visualizor::DrawBressenhanLine(image, pixel_uv[i].x() + pixel_offset.x(), pixel_uv[i].y() + pixel_offset.y(),
+            ImagePainter::DrawBressenhanLine(image, pixel_uv[i].x() + pixel_offset.x(), pixel_uv[i].y() + pixel_offset.y(),
                 pixel_uv[i].x() + pixel_offset.x() - optical_velocity[i].x(),
                 pixel_uv[i].y() + pixel_offset.y() - optical_velocity[i].y(), line_color);
         }
@@ -370,8 +373,8 @@ void Visualizor::DrawFeaturesWithIdByOpticalVelocity(const std::vector<Vec2> &pi
         for (uint32_t i = 0; i < pixel_uv.size(); ++i) {
             CONTINUE_IF(!status.empty() && status[i] > min_valid_status_value);
 
-            Visualizor::DrawSolidCircle(image, pixel_uv[i].x() + pixel_offset.x(), pixel_uv[i].y() + pixel_offset.y(), 3, pixel_color);
-            Visualizor::DrawString(image, std::to_string(ids[i]), pixel_uv[i].x() + kStringLocationColOffset + pixel_offset.x(),
+            ImagePainter::DrawSolidCircle(image, pixel_uv[i].x() + pixel_offset.x(), pixel_uv[i].y() + pixel_offset.y(), 3, pixel_color);
+            ImagePainter::DrawString(image, std::to_string(ids[i]), pixel_uv[i].x() + kStringLocationColOffset + pixel_offset.x(),
                 pixel_uv[i].y() + kStringLocationRowOffset + pixel_offset.y(), pixel_color);
         }
     }

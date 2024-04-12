@@ -1,4 +1,5 @@
 #include "visualizor.h"
+#include "image_painter.h"
 #include "slam_memory.h"
 
 #define STB_IMAGE_IMPLEMENTATION
@@ -10,6 +11,8 @@
 #define STBI_NO_PIC
 #include "stb_image.h"
 #include "stb_image_write.h"
+
+using namespace IMAGE_PAINTER;
 
 namespace SLAM_VISUALIZOR {
 
@@ -29,7 +32,7 @@ bool Visualizor::LoadImage<GrayImage>(const std::string &image_file, GrayImage &
 
     switch (channel) {
         case 3: {
-            Visualizor::ConvertRgbToUint8(raw_data, gray_data, size);
+            ImagePainter::ConvertRgbToUint8(raw_data, gray_data, size);
             break;
         }
         case 1: {
@@ -70,7 +73,7 @@ bool Visualizor::LoadImage<RgbImage>(const std::string &image_file, RgbImage &im
             break;
         }
         case 1: {
-            Visualizor::ConvertUint8ToRgb(raw_data, rgb_data, size / 3);
+            ImagePainter::ConvertUint8ToRgb(raw_data, rgb_data, size / 3);
             break;
         }
         default: {

@@ -15,22 +15,24 @@ if ( NOT TARGET lib_slam_utility_operate )
     add_subdirectory( ${SLAM_UTILITY_PATH}/operate ${PROJECT_SOURCE_DIR}/build/lib_slam_utility_operate )
 endif()
 
+# Add image painter.
+set( IMAGE_PAINTER_PATH ${PROJECT_SOURCE_DIR}/../Image_Painter/src )
+if ( NOT TARGET lib_image_painter )
+    add_subdirectory( ${IMAGE_PAINTER_PATH} ${PROJECT_SOURCE_DIR}/build/lib_image_painter )
+endif()
+
 # Add dependence for visualizor.
 if ( NOT TARGET lib_visualize_base_glad_khr )
     add_subdirectory( glad+khr ${PROJECT_SOURCE_DIR}/build/lib_visualize_base_glad_khr )
-endif()
-if ( NOT TARGET lib_visualize_base_fonts )
-    add_subdirectory( fonts ${PROJECT_SOURCE_DIR}/build/lib_visualize_base_fonts )
 endif()
 if ( NOT TARGET lib_visualize_base_stb )
     add_subdirectory( stb_image ${PROJECT_SOURCE_DIR}/build/lib_visualize_base_stb )
 endif()
 
+# Create library.
 add_library( lib_image_visualizor ${AUX_SRC_SLAM_UTILITY_VISUALIZE} )
-
 target_include_directories( lib_image_visualizor PUBLIC
     .
-    fonts
     glad+khr
     stb_image
 )
@@ -40,8 +42,9 @@ target_link_libraries( lib_image_visualizor
     lib_slam_utility_memory
     lib_slam_utility_operate
 
+    lib_image_painter
+
     lib_visualize_base_glad_khr
-    lib_visualize_base_fonts
     lib_visualize_base_stb
 )
 
