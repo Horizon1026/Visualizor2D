@@ -20,27 +20,6 @@ namespace {
     constexpr int32_t kMatrixCol = 180;
 }
 
-bool GetFilesInPath(std::string dir, std::vector<std::string> &filenames) {
-    DIR *ptr_dir;
-    struct dirent *ptr;
-    if (!(ptr_dir = opendir(dir.c_str()))) {
-        ReportError("Cannot open dir " << dir);
-        return false;
-    }
-
-    filenames.reserve(1000);
-
-    while ((ptr = readdir(ptr_dir)) != 0) {
-        if (strcmp(ptr->d_name, ".") != 0 && strcmp(ptr->d_name, "..") != 0) {
-            filenames.emplace_back(dir + "/" + ptr->d_name);
-        }
-    }
-
-    closedir(ptr_dir);
-
-    return true;
-}
-
 void TestVisualizorStatic() {
     ReportInfo(YELLOW ">> Test visualizor show static image." RESET_COLOR);
     const std::string png_image_file = "../example/image.png";
@@ -64,11 +43,19 @@ void TestVisualizorDynamic() {
     ReportInfo(YELLOW ">> Test visualizor show dynamic image." RESET_COLOR);
 
     std::vector<std::string> cam0_filenames;
-    RETURN_IF(!GetFilesInPath("D:/My_Github/Datasets/MH_01_easy/mav0/cam0/data", cam0_filenames));
+    if (!SlamOperation::GetFilesNameInDirectory("/home/horizon/Desktop/date_sets/euroc/MH_01_easy/mav0/cam0/data", cam0_filenames)) {
+        if (!SlamOperation::GetFilesNameInDirectory("/mnt/d/My_Github/Datasets/Euroc/MH_01_easy/mav0/cam0/data", cam0_filenames)) {
+            RETURN_IF(!SlamOperation::GetFilesNameInDirectory("D:/My_Github/Datasets/Euroc/MH_01_easy/mav0/cam0/data", cam0_filenames));
+        }
+    }
     std::sort(cam0_filenames.begin(), cam0_filenames.end());
 
     std::vector<std::string> cam1_filenames;
-    RETURN_IF(!GetFilesInPath("D:/My_Github/Datasets/MH_01_easy/mav0/cam1/data", cam1_filenames));
+    if (!SlamOperation::GetFilesNameInDirectory("/home/horizon/Desktop/date_sets/euroc/MH_01_easy/mav0/cam1/data", cam1_filenames)) {
+        if (!SlamOperation::GetFilesNameInDirectory("/mnt/d/My_Github/Datasets/Euroc/MH_01_easy/mav0/cam1/data", cam1_filenames)) {
+            RETURN_IF(!SlamOperation::GetFilesNameInDirectory("D:/My_Github/Datasets/Euroc/MH_01_easy/mav0/cam1/data", cam1_filenames));
+        }
+    }
     std::sort(cam1_filenames.begin(), cam1_filenames.end());
 
     for (uint32_t i = 0; i < 100; ++i) {
