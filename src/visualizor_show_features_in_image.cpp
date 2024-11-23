@@ -2,7 +2,7 @@
 #include "image_painter.h"
 #include "slam_memory.h"
 #include "slam_operations.h"
-#include "log_report.h"
+#include "slam_log_reporter.h"
 
 using namespace IMAGE_PAINTER;
 

@@ -3,7 +3,7 @@
 
 #include "datatype_basic.h"
 #include "datatype_image.h"
-#include "log_report.h"
+#include "slam_log_reporter.h"
 
 // Dependence.
 #include "glad.h"
