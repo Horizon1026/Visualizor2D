@@ -1,7 +1,7 @@
 #ifndef _SLAM_UTILITY_IMAGE_VISUALIZOR_H_
 #define _SLAM_UTILITY_IMAGE_VISUALIZOR_H_
 
-#include "datatype_basic.h"
+#include "basic_type.h"
 #include "datatype_image.h"
 #include "slam_log_reporter.h"
 
