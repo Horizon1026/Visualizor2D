@@ -1,7 +1,7 @@
 #include "basic_type.h"
 #include "datatype_image.h"
 #include "image_painter.h"
-#include "visualizor.h"
+#include "visualizor_2d.h"
 #include "slam_log_reporter.h"
 #include "slam_operations.h"
 

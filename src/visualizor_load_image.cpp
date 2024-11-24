@@ -1,4 +1,4 @@
-#include "visualizor.h"
+#include "visualizor_2d.h"
 #include "image_painter.h"
 #include "slam_memory.h"
 
