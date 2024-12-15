@@ -22,12 +22,12 @@ struct VisualizorWindow {
     GLuint texture_id = 0;
 };
 
-// Class Visualizor Declaration.
-class Visualizor {
+// Class Visualizor2D Declaration.
+class Visualizor2D {
 
 public:
-    virtual ~Visualizor();
-    static Visualizor &GetInstance();
+    virtual ~Visualizor2D();
+    static Visualizor2D &GetInstance();
 
     // Support for feature tracking result visualization.
     static void ShowImageWithDetectedFeatures(const std::string &window_title,
@@ -149,7 +149,7 @@ public:
     static std::map<std::string, VisualizorWindow> &windows() { return windows_; }
 
 private:
-	Visualizor() = default;
+	Visualizor2D() = default;
 
     // Callback function for image show.
     static void ErrorCallback(int32_t error, const char *description);

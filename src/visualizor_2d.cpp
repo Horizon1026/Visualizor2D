@@ -5,42 +5,42 @@
 
 namespace SLAM_VISUALIZOR {
 
-std::map<std::string, VisualizorWindow> Visualizor::windows_;
-bool Visualizor::some_key_pressed_ = false;
+std::map<std::string, VisualizorWindow> Visualizor2D::windows_;
+bool Visualizor2D::some_key_pressed_ = false;
 
-Visualizor &Visualizor::GetInstance() {
-    static Visualizor instance;
+Visualizor2D &Visualizor2D::GetInstance() {
+    static Visualizor2D instance;
     return instance;
 }
 
-Visualizor::~Visualizor() {
+Visualizor2D::~Visualizor2D() {
     // Clear all windows and recovery resources.
-    Visualizor::windows_.clear();
+    Visualizor2D::windows_.clear();
     glfwTerminate();
 }
 
-void Visualizor::ErrorCallback(int32_t error, const char *description) {
+void Visualizor2D::ErrorCallback(int32_t error, const char *description) {
     ReportError("[Visualizor] Error detected :" << description);
 }
 
-void Visualizor::KeyboardCallback(GLFWwindow *window, int32_t key, int32_t scan_code, int32_t action, int32_t mods) {
+void Visualizor2D::KeyboardCallback(GLFWwindow *window, int32_t key, int32_t scan_code, int32_t action, int32_t mods) {
     if (action == GLFW_PRESS && key == GLFW_KEY_ESCAPE) {
         glfwSetWindowShouldClose(window, GLFW_TRUE);
     } else if (action == GLFW_PRESS) {
-        Visualizor::some_key_pressed_ = true;
+        Visualizor2D::some_key_pressed_ = true;
     }
 }
 
-VisualizorWindow *Visualizor::GetWindowPointer(const std::string &title, int32_t width, int32_t height) {
-    auto item = Visualizor::windows_.find(title);
-    if (item == Visualizor::windows_.end()) {
+VisualizorWindow *Visualizor2D::GetWindowPointer(const std::string &title, int32_t width, int32_t height) {
+    auto item = Visualizor2D::windows_.find(title);
+    if (item == Visualizor2D::windows_.end()) {
         // If window with selected title is not found, create a new window.
-        auto iter = Visualizor::windows_.insert(std::make_pair(title, VisualizorWindow()));
+        auto iter = Visualizor2D::windows_.insert(std::make_pair(title, VisualizorWindow()));
         iter.first->second.glfw_window = glfwCreateWindow(width, height, title.c_str(), nullptr, nullptr);
 
         // If insert failed, clear it.
         if (iter.first->second.glfw_window == nullptr) {
-            Visualizor::windows_.erase(title);
+            Visualizor2D::windows_.erase(title);
             return nullptr;
         }
         return &(iter.first->second);

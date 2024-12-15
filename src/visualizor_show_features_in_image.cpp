@@ -13,16 +13,16 @@ namespace {
     constexpr float kStringLocationRowOffset = -12.0f;
 }
 
-void Visualizor::ShowImageWithDetectedFeatures(const std::string &window_title,
+void Visualizor2D::ShowImageWithDetectedFeatures(const std::string &window_title,
                                                const GrayImage &image,
                                                const std::vector<Vec2> &pixel_uv,
                                                RgbPixel color) {
     RgbImage show_image;
     DrawImageWithDetectedFeatures(image, pixel_uv, color, show_image);
-    Visualizor::ShowImage(window_title, show_image);
+    Visualizor2D::ShowImage(window_title, show_image);
 }
 
-void Visualizor::DrawImageWithDetectedFeatures(const GrayImage &image,
+void Visualizor2D::DrawImageWithDetectedFeatures(const GrayImage &image,
                                                const std::vector<Vec2> &pixel_uv,
                                                RgbPixel color,
                                                RgbImage &show_image) {
@@ -36,7 +36,7 @@ void Visualizor::DrawImageWithDetectedFeatures(const GrayImage &image,
     }
 }
 
-void Visualizor::ShowImageWithTrackedFeatures(const std::string &window_title,
+void Visualizor2D::ShowImageWithTrackedFeatures(const std::string &window_title,
                                               const GrayImage &cur_image,
                                               const std::vector<Vec2> &ref_pixel_uv,
                                               const std::vector<Vec2> &cur_pixel_uv,
@@ -48,10 +48,10 @@ void Visualizor::ShowImageWithTrackedFeatures(const std::string &window_title,
     RgbImage show_image;
     DrawImageWithTrackedFeatures(cur_image, ref_pixel_uv, cur_pixel_uv, track_status, min_valid_track_status_value,
         tracked_color, untracked_color, flow_line_color, show_image);
-    Visualizor::ShowImage(window_title, show_image);
+    Visualizor2D::ShowImage(window_title, show_image);
 }
 
-void Visualizor::DrawImageWithTrackedFeatures(const GrayImage &cur_image,
+void Visualizor2D::DrawImageWithTrackedFeatures(const GrayImage &cur_image,
                                               const std::vector<Vec2> &ref_pixel_uv,
                                               const std::vector<Vec2> &cur_pixel_uv,
                                               const std::vector<uint8_t> &track_status,
@@ -79,7 +79,7 @@ void Visualizor::DrawImageWithTrackedFeatures(const GrayImage &cur_image,
     }
 }
 
-void Visualizor::ShowImageWithTrackedFeatures(const std::string &window_title,
+void Visualizor2D::ShowImageWithTrackedFeatures(const std::string &window_title,
                                               const GrayImage &ref_image,
                                               const GrayImage &cur_image,
                                               const std::vector<Vec2> &ref_pixel_uv,
@@ -91,10 +91,10 @@ void Visualizor::ShowImageWithTrackedFeatures(const std::string &window_title,
     RgbImage show_image;
     DrawImageWithTrackedFeatures(ref_image, cur_image, ref_pixel_uv, cur_pixel_uv, track_status,
         min_valid_track_status_value, tracked_color, untracked_color, show_image);
-    Visualizor::ShowImage(window_title, show_image);
+    Visualizor2D::ShowImage(window_title, show_image);
 }
 
-void Visualizor::DrawImageWithTrackedFeatures(const GrayImage &ref_image,
+void Visualizor2D::DrawImageWithTrackedFeatures(const GrayImage &ref_image,
                                               const GrayImage &cur_image,
                                               const std::vector<Vec2> &ref_pixel_uv,
                                               const std::vector<Vec2> &cur_pixel_uv,
@@ -149,7 +149,7 @@ void Visualizor::DrawImageWithTrackedFeatures(const GrayImage &ref_image,
     }
 }
 
-void Visualizor::ShowImageWithTrackedFeaturesWithId(const std::string &window_title,
+void Visualizor2D::ShowImageWithTrackedFeaturesWithId(const std::string &window_title,
                                                     const GrayImage &ref_image,
                                                     const GrayImage &cur_image,
                                                     const std::vector<Vec2> &ref_pixel_uv,
@@ -164,10 +164,10 @@ void Visualizor::ShowImageWithTrackedFeaturesWithId(const std::string &window_ti
     DrawImageWithTrackedFeaturesWithId(ref_image, cur_image, ref_pixel_uv, cur_pixel_uv, ref_ids, cur_ids,
         tracked_status, min_valid_track_status_value, ref_tracked_cnt, cur_optical_velocity, show_image);
 
-    Visualizor::ShowImage(window_title, show_image);
+    Visualizor2D::ShowImage(window_title, show_image);
 }
 
-void Visualizor::DrawImageWithTrackedFeaturesWithId(const GrayImage &ref_image,
+void Visualizor2D::DrawImageWithTrackedFeaturesWithId(const GrayImage &ref_image,
                                                     const GrayImage &cur_image,
                                                     const std::vector<Vec2> &ref_pixel_uv,
                                                     const std::vector<Vec2> &cur_pixel_uv,
@@ -204,15 +204,15 @@ void Visualizor::DrawImageWithTrackedFeaturesWithId(const GrayImage &ref_image,
 
     // [left] Draw points in reference image.
     std::vector<uint8_t> empty_tracked_status;
-    Visualizor::DrawFeaturesWithIdByTrackedNumbers(ref_pixel_uv, ref_ids, Pixel(0, 0), empty_tracked_status,
+    Visualizor2D::DrawFeaturesWithIdByTrackedNumbers(ref_pixel_uv, ref_ids, Pixel(0, 0), empty_tracked_status,
         min_valid_track_status_value, ref_tracked_cnt, show_image);
 
     // [right] Draw points in current image.
-    Visualizor::DrawFeaturesWithIdByOpticalVelocity(cur_pixel_uv, cur_ids, Pixel(cur_image.cols(), 0),
+    Visualizor2D::DrawFeaturesWithIdByOpticalVelocity(cur_pixel_uv, cur_ids, Pixel(cur_image.cols(), 0),
         tracked_status, min_valid_track_status_value, cur_optical_velocity, show_image);
 }
 
-void Visualizor::ShowImageWithTrackedFeaturesWithId(const std::string &window_title,
+void Visualizor2D::ShowImageWithTrackedFeaturesWithId(const std::string &window_title,
                                                     const GrayImage &ref_image_left,
                                                     const GrayImage &ref_image_right,
                                                     const GrayImage &cur_image_left,
@@ -238,10 +238,10 @@ void Visualizor::ShowImageWithTrackedFeaturesWithId(const std::string &window_ti
         ref_stereo_tracked_status, cur_stereo_tracked_status, min_valid_track_status_value,
         ref_tracked_cnt, cur_optical_velocity, show_image);
 
-    Visualizor::ShowImage(window_title, show_image);
+    Visualizor2D::ShowImage(window_title, show_image);
 }
 
-void Visualizor::DrawImageWithTrackedFeaturesWithId(const GrayImage &ref_image_left,
+void Visualizor2D::DrawImageWithTrackedFeaturesWithId(const GrayImage &ref_image_left,
                                                     const GrayImage &ref_image_right,
                                                     const GrayImage &cur_image_left,
                                                     const GrayImage &cur_image_right,
@@ -299,23 +299,23 @@ void Visualizor::DrawImageWithTrackedFeaturesWithId(const GrayImage &ref_image_l
     std::vector<uint8_t> status;
 
     // [top left] Draw points in reference left image.
-    Visualizor::DrawFeaturesWithIdByTrackedNumbers(ref_pixel_uv_left, ref_ids_left, ref_left_offset,
+    Visualizor2D::DrawFeaturesWithIdByTrackedNumbers(ref_pixel_uv_left, ref_ids_left, ref_left_offset,
         status, min_valid_track_status_value, ref_tracked_cnt, show_image);
 
     // [top right] Draw points in reference right image.
-    Visualizor::DrawFeaturesWithIdByTrackedNumbers(ref_pixel_uv_right, ref_ids_right, ref_right_offset,
+    Visualizor2D::DrawFeaturesWithIdByTrackedNumbers(ref_pixel_uv_right, ref_ids_right, ref_right_offset,
         ref_stereo_tracked_status, min_valid_track_status_value, ref_tracked_cnt, show_image);
 
     // [bottom left] Draw points in current left image.
-    Visualizor::DrawFeaturesWithIdByOpticalVelocity(cur_pixel_uv_left, cur_ids_left, cur_left_offset,
+    Visualizor2D::DrawFeaturesWithIdByOpticalVelocity(cur_pixel_uv_left, cur_ids_left, cur_left_offset,
         frame_tracked_status, min_valid_track_status_value, cur_optical_velocity, show_image);
 
     // [bottom right] Draw points in current right image.
-    Visualizor::DrawFeaturesWithIdByOpticalVelocity(cur_pixel_uv_right, cur_ids_right, cur_right_offset,
+    Visualizor2D::DrawFeaturesWithIdByOpticalVelocity(cur_pixel_uv_right, cur_ids_right, cur_right_offset,
         cur_stereo_tracked_status, min_valid_track_status_value, cur_optical_velocity, show_image);
 }
 
-void Visualizor::DrawFeaturesWithIdByTrackedNumbers(const std::vector<Vec2> &pixel_uv,
+void Visualizor2D::DrawFeaturesWithIdByTrackedNumbers(const std::vector<Vec2> &pixel_uv,
                                                     const std::vector<uint32_t> &ids,
                                                     const Pixel &pixel_offset,
                                                     const std::vector<uint8_t> &status,
@@ -346,7 +346,7 @@ void Visualizor::DrawFeaturesWithIdByTrackedNumbers(const std::vector<Vec2> &pix
     }
 }
 
-void Visualizor::DrawFeaturesWithIdByOpticalVelocity(const std::vector<Vec2> &pixel_uv,
+void Visualizor2D::DrawFeaturesWithIdByOpticalVelocity(const std::vector<Vec2> &pixel_uv,
                                                      const std::vector<uint32_t> &ids,
                                                      const Pixel &pixel_offset,
                                                      const std::vector<uint8_t> &status,

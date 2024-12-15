@@ -26,17 +26,17 @@ void TestVisualizorStatic() {
 
     // Create rgb image from png file.
     RgbImage rgb_image_png;
-    Visualizor::LoadImage(png_image_file, rgb_image_png);
+    Visualizor2D::LoadImage(png_image_file, rgb_image_png);
 
     // Create gray image from png file.
     GrayImage gray_image_png;
-    Visualizor::LoadImage(png_image_file, gray_image_png);
+    Visualizor2D::LoadImage(png_image_file, gray_image_png);
 
     // Test visualizor.
-    Visualizor::ShowImage("Gray Png Image", gray_image_png);
-    Visualizor::WaitKey(1);
-    Visualizor::ShowImage("Rgb Png Image", rgb_image_png);
-    Visualizor::WaitKey(0);
+    Visualizor2D::ShowImage("Gray Png Image", gray_image_png);
+    Visualizor2D::WaitKey(1);
+    Visualizor2D::ShowImage("Rgb Png Image", rgb_image_png);
+    Visualizor2D::WaitKey(0);
 }
 
 void TestVisualizorDynamic() {
@@ -61,15 +61,15 @@ void TestVisualizorDynamic() {
     for (uint32_t i = 0; i < 100; ++i) {
         GrayImage image_left;
         GrayImage image_right;
-        Visualizor::LoadImage(cam0_filenames[i], image_left);
-        Visualizor::LoadImage(cam1_filenames[i], image_right);
+        Visualizor2D::LoadImage(cam0_filenames[i], image_left);
+        Visualizor2D::LoadImage(cam1_filenames[i], image_right);
 
-        Visualizor::ShowImage("Left", image_left);
-        Visualizor::ShowImage("Right", image_right);
+        Visualizor2D::ShowImage("Left", image_left);
+        Visualizor2D::ShowImage("Right", image_right);
 
-        Visualizor::WaitKey(15);
+        Visualizor2D::WaitKey(15);
     }
-    Visualizor::WaitKey(0);
+    Visualizor2D::WaitKey(0);
 }
 
 int main(int argc, char **argv) {

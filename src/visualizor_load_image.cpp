@@ -17,7 +17,7 @@ using namespace IMAGE_PAINTER;
 namespace SLAM_VISUALIZOR {
 
 template <>
-bool Visualizor::LoadImage<GrayImage>(const std::string &image_file, GrayImage &image) {
+bool Visualizor2D::LoadImage<GrayImage>(const std::string &image_file, GrayImage &image) {
     int32_t width = 0;
     int32_t height = 0;
     int32_t channel = 0;
@@ -54,7 +54,7 @@ bool Visualizor::LoadImage<GrayImage>(const std::string &image_file, GrayImage &
 }
 
 template <>
-bool Visualizor::LoadImage<RgbImage>(const std::string &image_file, RgbImage &image) {
+bool Visualizor2D::LoadImage<RgbImage>(const std::string &image_file, RgbImage &image) {
     int32_t width = 0;
     int32_t height = 0;
     int32_t channel = 0;

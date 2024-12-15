@@ -10,19 +10,19 @@ using namespace IMAGE_PAINTER;
 
 namespace SLAM_VISUALIZOR {
 
-template bool Visualizor::ShowImage<GrayImage>(const std::string &window_title, const GrayImage &image, bool resizable);
-template bool Visualizor::ShowImage<RgbImage>(const std::string &window_title, const RgbImage &image, bool resizable);
+template bool Visualizor2D::ShowImage<GrayImage>(const std::string &window_title, const GrayImage &image, bool resizable);
+template bool Visualizor2D::ShowImage<RgbImage>(const std::string &window_title, const RgbImage &image, bool resizable);
 template <typename T>
-bool Visualizor::ShowImage(const std::string &window_title, const T &image, bool resizable) {
+bool Visualizor2D::ShowImage(const std::string &window_title, const T &image, bool resizable) {
     if (image.data() == nullptr || image.rows() < 1 || image.cols() < 1) {
         ReportError("[Visualizor] ShowImage() got an invalid image.");
         return false;
     }
 
-    auto item = Visualizor::windows_.find(window_title);
-    if (item == Visualizor::windows_.end()) {
+    auto item = Visualizor2D::windows_.find(window_title);
+    if (item == Visualizor2D::windows_.end()) {
         // New window. Create a new window and a new texture.
-        glfwSetErrorCallback(Visualizor::ErrorCallback);
+        glfwSetErrorCallback(Visualizor2D::ErrorCallback);
 
         if (!glfwInit()) {
             ReportError("[Visualizor] GLFW initialize failed.");
@@ -41,9 +41,9 @@ bool Visualizor::ShowImage(const std::string &window_title, const T &image, bool
         gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
         glfwSwapInterval(1);
         glfwShowWindow(window->glfw_window);
-        glfwSetKeyCallback(window->glfw_window, Visualizor::KeyboardCallback);
+        glfwSetKeyCallback(window->glfw_window, Visualizor2D::KeyboardCallback);
 
-        Visualizor::CreateTextureByImage<T>(image, window->texture_id);
+        Visualizor2D::CreateTextureByImage<T>(image, window->texture_id);
 
         glColor3f(1.0f, 1.0f, 1.0f);
         glfwHideWindow(window->glfw_window);
@@ -53,15 +53,15 @@ bool Visualizor::ShowImage(const std::string &window_title, const T &image, bool
         VisualizorWindow *window = GetWindowPointer(window_title, image.cols(), image.rows());
         glfwMakeContextCurrent(window->glfw_window);
         glfwSetWindowShouldClose(window->glfw_window, GLFW_FALSE);
-        Visualizor::CreateTextureByImage<T>(image, window->texture_id);
+        Visualizor2D::CreateTextureByImage<T>(image, window->texture_id);
     }
 
     return true;
 }
 
-void Visualizor::WaitKey(int32_t delay_ms) {
+void Visualizor2D::WaitKey(int32_t delay_ms) {
     // Display add window hidden in ShowImage().
-    for (const auto &item : Visualizor::windows_) {
+    for (const auto &item : Visualizor2D::windows_) {
         const auto &glfw_window = item.second.glfw_window;
         if (!glfwWindowShouldClose(glfw_window)) {
             // If this window is already shown, do not focus on it.
@@ -74,14 +74,14 @@ void Visualizor::WaitKey(int32_t delay_ms) {
         }
     }
 
-    while (!Visualizor::windows_.empty()) {
+    while (!Visualizor2D::windows_.empty()) {
         uint32_t closed_window_cnt = 0;
-        for (const auto &item : Visualizor::windows_) {
+        for (const auto &item : Visualizor2D::windows_) {
             const auto &window = item.second;
 
             if (!glfwWindowShouldClose(window.glfw_window)) {
                 glfwMakeContextCurrent(window.glfw_window);
-                Visualizor::ShowTextureInCurrentWindow(window.texture_id);
+                Visualizor2D::ShowTextureInCurrentWindow(window.texture_id);
                 glfwSwapBuffers(window.glfw_window);
             } else {
                 glfwHideWindow(window.glfw_window);
@@ -96,26 +96,26 @@ void Visualizor::WaitKey(int32_t delay_ms) {
             break;
         }
 
-        BREAK_IF(closed_window_cnt == Visualizor::windows_.size());
-        BREAK_IF(Visualizor::some_key_pressed_);
+        BREAK_IF(closed_window_cnt == Visualizor2D::windows_.size());
+        BREAK_IF(Visualizor2D::some_key_pressed_);
     }
 
     // Resource recovery is in Destructor Function.
-    Visualizor::some_key_pressed_ = false;
+    Visualizor2D::some_key_pressed_ = false;
 }
 
-template <> void Visualizor::PreprocessImage<GrayImage>(const GrayImage &image, uint8_t *buff) {
+template <> void Visualizor2D::PreprocessImage<GrayImage>(const GrayImage &image, uint8_t *buff) {
     ImagePainter::ConvertUint8ToRgbAndUpsideDown(image.data(), buff, image.rows(), image.cols());
 }
 
-template <> void Visualizor::PreprocessImage<RgbImage>(const RgbImage &image, uint8_t *buff) {
+template <> void Visualizor2D::PreprocessImage<RgbImage>(const RgbImage &image, uint8_t *buff) {
     ImagePainter::ConvertRgbToBgrAndUpsideDown(image.data(), buff, image.rows(), image.cols());
 }
 
-template void Visualizor::CreateTextureByImage<GrayImage>(const GrayImage &image, GLuint &texture_id);
-template void Visualizor::CreateTextureByImage<RgbImage>(const RgbImage &image, GLuint &texture_id);
+template void Visualizor2D::CreateTextureByImage<GrayImage>(const GrayImage &image, GLuint &texture_id);
+template void Visualizor2D::CreateTextureByImage<RgbImage>(const RgbImage &image, GLuint &texture_id);
 template <typename T>
-void Visualizor::CreateTextureByImage(const T &image, GLuint &texture_id) {
+void Visualizor2D::CreateTextureByImage(const T &image, GLuint &texture_id) {
     if (texture_id == 0) {
         glGenTextures(1, &texture_id);
     }
@@ -125,7 +125,7 @@ void Visualizor::CreateTextureByImage(const T &image, GLuint &texture_id) {
 
     const int32_t size = image.rows() * image.cols();
     uint8_t *image_buff = (uint8_t *)SlamMemory::Malloc(size * 3 * sizeof(uint8_t));
-    Visualizor::PreprocessImage<T>(image, image_buff);
+    Visualizor2D::PreprocessImage<T>(image, image_buff);
 
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, image.cols(), image.rows(), 0, GL_BGR, GL_UNSIGNED_BYTE, image_buff);
 
@@ -135,7 +135,7 @@ void Visualizor::CreateTextureByImage(const T &image, GLuint &texture_id) {
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 }
 
-void Visualizor::ShowTextureInCurrentWindow(GLuint texture_id) {
+void Visualizor2D::ShowTextureInCurrentWindow(GLuint texture_id) {
     int32_t width, height;
     glfwGetFramebufferSize(glfwGetCurrentContext(), &width, &height);
 
@@ -166,9 +166,9 @@ void Visualizor::ShowTextureInCurrentWindow(GLuint texture_id) {
     glEnd();
 }
 
-void Visualizor::WindowList() {
+void Visualizor2D::WindowList() {
     ReportInfo("[Visualizor] All stored window.");
-    for (auto &item : Visualizor::windows_) {
+    for (auto &item : Visualizor2D::windows_) {
         ReportInfo(">> window title " << item.first);
         ReportInfo("   window ptr " << item.second.glfw_window);
         ReportInfo("   window texture " << item.second.texture_id);
