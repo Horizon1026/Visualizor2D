@@ -144,6 +144,12 @@ public:
     // Support for image load and save.
     template <typename ImageType>
     static bool LoadImage(const std::string &image_file, ImageType &image);
+    template <typename ImageType>
+    static bool SaveImage(const std::string &image_file, const ImageType &image);
+    template <typename ImageType>
+    static bool LoadFromPngImageData(const std::vector<uint8_t> &data, ImageType &image);
+    template <typename ImageType>
+    static void ConvertToPngImageData(const ImageType &image, std::vector<uint8_t> &data);
 
     // Reference for member variables.
     static std::map<std::string, VisualizorWindow> &windows() { return windows_; }
