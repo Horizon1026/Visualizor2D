@@ -5,8 +5,6 @@
 #define STB_IMAGE_IMPLEMENTATION
 #define STBI_ONLY_PNG
 #include "stb_image.h"
-#define STB_IMAGE_WRITE_IMPLEMENTATION
-#include "stb_image_write.h"
 
 using namespace IMAGE_PAINTER;
 
@@ -85,23 +83,13 @@ bool Visualizor2D::LoadImage<RgbImage>(const std::string &image_file, RgbImage &
 }
 
 template <>
-bool Visualizor2D::SaveImage<GrayImage>(const std::string &image_file, const GrayImage &image) {
-    return stbi_write_png(image_file.c_str(), image.cols(), image.rows(), 1, image.data(), image.cols());
-}
-
-template <>
-bool Visualizor2D::SaveImage<RgbImage>(const std::string &image_file, const RgbImage &image) {
-    return stbi_write_png(image_file.c_str(), image.cols(), image.rows(), 3, image.data(), 3 * image.cols());
-}
-
-template <>
-bool Visualizor2D::LoadFromPngImageData<GrayImage>(const std::vector<uint8_t> &data, GrayImage &image) {
+bool Visualizor2D::LoadFromPngImageData<GrayImage>(const std::vector<uint8_t> &png_data, GrayImage &image) {
     int32_t width = 0;
     int32_t height = 0;
     int32_t channel = 0;
-    uint8_t *raw_data = stbi_load_from_memory(data.data(), data.size(), &width, &height, &channel, 0);
+    uint8_t *raw_data = stbi_load_from_memory(png_data.data(), png_data.size(), &width, &height, &channel, 0);
     if (raw_data == nullptr) {
-        ReportError("[Visualizor] Cannot load image from vector of data.");
+        ReportError("[Visualizor] Cannot load image from vector of png_data.");
         return false;
     }
 
@@ -117,7 +105,7 @@ bool Visualizor2D::LoadFromPngImageData<GrayImage>(const std::vector<uint8_t> &d
             break;
         }
         default: {
-            ReportError("[Visualizor] Cannot decode image from vector of data.");
+            ReportError("[Visualizor] Cannot decode image from vector of png_data.");
             SlamMemory::Free(raw_data);
             SlamMemory::Free(gray_data);
             return false;
@@ -131,13 +119,13 @@ bool Visualizor2D::LoadFromPngImageData<GrayImage>(const std::vector<uint8_t> &d
 }
 
 template <>
-bool Visualizor2D::LoadFromPngImageData<RgbImage>(const std::vector<uint8_t> &data, RgbImage &image) {
+bool Visualizor2D::LoadFromPngImageData<RgbImage>(const std::vector<uint8_t> &png_data, RgbImage &image) {
     int32_t width = 0;
     int32_t height = 0;
     int32_t channel = 0;
-    uint8_t *raw_data = stbi_load_from_memory(data.data(), data.size(), &width, &height, &channel, 0);
+    uint8_t *raw_data = stbi_load_from_memory(png_data.data(), png_data.size(), &width, &height, &channel, 0);
     if (raw_data == nullptr) {
-        ReportError("[Visualizor] Cannot load image from vector of data.");
+        ReportError("[Visualizor] Cannot load image from vector of png_data.");
         return false;
     }
 
@@ -153,7 +141,7 @@ bool Visualizor2D::LoadFromPngImageData<RgbImage>(const std::vector<uint8_t> &da
             break;
         }
         default: {
-            ReportError("[Visualizor] Cannot decode image from vector of data.");
+            ReportError("[Visualizor] Cannot decode image from vector of png_data.");
             SlamMemory::Free(raw_data);
             SlamMemory::Free(rgb_data);
             return false;
@@ -164,24 +152,6 @@ bool Visualizor2D::LoadFromPngImageData<RgbImage>(const std::vector<uint8_t> &da
     SlamMemory::Free(raw_data);
     image.SetImage(rgb_data, height, width, true);
     return true;
-}
-
-template <>
-void Visualizor2D::ConvertToPngImageData<GrayImage>(const GrayImage &image, std::vector<uint8_t> &data) {
-    int out_len = 0;
-    uint8_t *png_data = stbi_write_png_to_mem(image.data(), image.cols(), image.cols(), image.rows(), 1, &out_len);
-    data.resize(out_len);
-    std::copy_n(png_data, out_len, data.data());
-    STBI_FREE(png_data);
-}
-
-template <>
-void Visualizor2D::ConvertToPngImageData<RgbImage>(const RgbImage &image, std::vector<uint8_t> &data) {
-    int out_len = 0;
-    uint8_t *png_data = stbi_write_png_to_mem(image.data(), 3 * image.cols(), image.cols(), image.rows(), 3, &out_len);
-    data.resize(out_len);
-    std::copy_n(png_data, out_len, data.data());
-    STBI_FREE(png_data);
 }
 
 }

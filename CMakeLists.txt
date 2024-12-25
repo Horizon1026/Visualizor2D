@@ -19,3 +19,11 @@ add_executable( test_visualizor
 target_link_libraries( test_visualizor
     lib_2d_visualizor
 )
+
+# Create executable target to test loda and save image.
+add_executable( test_load_and_save
+    test/test_load_and_save.cpp
+)
+target_link_libraries( test_load_and_save
+    lib_2d_visualizor
+)

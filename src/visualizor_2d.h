@@ -147,9 +147,9 @@ public:
     template <typename ImageType>
     static bool SaveImage(const std::string &image_file, const ImageType &image);
     template <typename ImageType>
-    static bool LoadFromPngImageData(const std::vector<uint8_t> &data, ImageType &image);
+    static bool LoadFromPngImageData(const std::vector<uint8_t> &png_data, ImageType &image);
     template <typename ImageType>
-    static void ConvertToPngImageData(const ImageType &image, std::vector<uint8_t> &data);
+    static bool SaveToPngImageData(const ImageType &image, std::vector<uint8_t> &png_data);
 
     // Reference for member variables.
     static std::map<std::string, VisualizorWindow> &windows() { return windows_; }
