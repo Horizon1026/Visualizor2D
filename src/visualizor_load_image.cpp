@@ -34,14 +34,14 @@ bool Visualizor2D::LoadImage<GrayImage>(const std::string &image_file, GrayImage
         }
         default: {
             ReportError("[Visualizor] Cannot decode image " << image_file);
-            SlamMemory::Free(raw_data);
+            STBI_FREE(raw_data);
             SlamMemory::Free(gray_data);
             return false;
         }
     }
 
     // Memory recovery is done in destory function.
-    SlamMemory::Free(raw_data);
+    STBI_FREE(raw_data);
     image.SetImage(gray_data, height, width, true);
     return true;
 }
@@ -70,14 +70,14 @@ bool Visualizor2D::LoadImage<RgbImage>(const std::string &image_file, RgbImage &
         }
         default: {
             ReportError("[Visualizor] Cannot decode image " << image_file);
-            SlamMemory::Free(raw_data);
+            STBI_FREE(raw_data);
             SlamMemory::Free(rgb_data);
             return false;
         }
     }
 
     // Memory recovery is done in destory function.
-    SlamMemory::Free(raw_data);
+    STBI_FREE(raw_data);
     image.SetImage(rgb_data, height, width, true);
     return true;
 }
@@ -106,14 +106,14 @@ bool Visualizor2D::LoadFromPngImageData<GrayImage>(const std::vector<uint8_t> &p
         }
         default: {
             ReportError("[Visualizor] Cannot decode image from vector of png_data.");
-            SlamMemory::Free(raw_data);
+            STBI_FREE(raw_data);
             SlamMemory::Free(gray_data);
             return false;
         }
     }
 
     // Memory recovery is done in destory function.
-    SlamMemory::Free(raw_data);
+    STBI_FREE(raw_data);
     image.SetImage(gray_data, height, width, true);
     return true;
 }
@@ -142,14 +142,14 @@ bool Visualizor2D::LoadFromPngImageData<RgbImage>(const std::vector<uint8_t> &pn
         }
         default: {
             ReportError("[Visualizor] Cannot decode image from vector of png_data.");
-            SlamMemory::Free(raw_data);
+            STBI_FREE(raw_data);
             SlamMemory::Free(rgb_data);
             return false;
         }
     }
 
     // Memory recovery is done in destory function.
-    SlamMemory::Free(raw_data);
+    STBI_FREE(raw_data);
     image.SetImage(rgb_data, height, width, true);
     return true;
 }
