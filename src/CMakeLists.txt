@@ -21,9 +21,9 @@ if ( NOT TARGET lib_image )
 endif()
 
 # Add image painter.
-set( IMAGE_PAINTER_PATH ${PROJECT_SOURCE_DIR}/../Image_Painter/src )
+set( IMAGE_PAINTER_PATH ${PROJECT_SOURCE_DIR}/../Image_Painter )
 if ( NOT TARGET lib_image_painter )
-    add_subdirectory( ${IMAGE_PAINTER_PATH} ${PROJECT_SOURCE_DIR}/build/lib_image_painter )
+    add_subdirectory( ${IMAGE_PAINTER_PATH}/src ${PROJECT_SOURCE_DIR}/build/lib_image_painter )
 endif()
 
 # Add dependence for visualizor.
