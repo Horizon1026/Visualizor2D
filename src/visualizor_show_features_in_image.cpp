@@ -14,18 +14,18 @@ namespace {
 }
 
 void Visualizor2D::ShowImageWithDetectedFeatures(const std::string &window_title,
-                                               const GrayImage &image,
-                                               const std::vector<Vec2> &pixel_uv,
-                                               RgbPixel color) {
+                                                 const GrayImage &image,
+                                                 const std::vector<Vec2> &pixel_uv,
+                                                 RgbPixel color) {
     RgbImage show_image;
     DrawImageWithDetectedFeatures(image, pixel_uv, color, show_image);
     Visualizor2D::ShowImage(window_title, show_image);
 }
 
 void Visualizor2D::DrawImageWithDetectedFeatures(const GrayImage &image,
-                                               const std::vector<Vec2> &pixel_uv,
-                                               RgbPixel color,
-                                               RgbImage &show_image) {
+                                                 const std::vector<Vec2> &pixel_uv,
+                                                 RgbPixel color,
+                                                 RgbImage &show_image) {
     // Create template rgb image.
     uint8_t *show_ref_image_buf = (uint8_t *)SlamMemory::Malloc(image.rows() * image.cols() * 3);
     show_image.SetImage(show_ref_image_buf, image.rows(), image.cols(), true);
@@ -37,14 +37,14 @@ void Visualizor2D::DrawImageWithDetectedFeatures(const GrayImage &image,
 }
 
 void Visualizor2D::ShowImageWithTrackedFeatures(const std::string &window_title,
-                                              const GrayImage &cur_image,
-                                              const std::vector<Vec2> &ref_pixel_uv,
-                                              const std::vector<Vec2> &cur_pixel_uv,
-                                              const std::vector<uint8_t> &track_status,
-                                              uint8_t min_valid_track_status_value,
-                                              RgbPixel tracked_color,
-                                              RgbPixel untracked_color,
-                                              RgbPixel flow_line_color) {
+                                                const GrayImage &cur_image,
+                                                const std::vector<Vec2> &ref_pixel_uv,
+                                                const std::vector<Vec2> &cur_pixel_uv,
+                                                const std::vector<uint8_t> &track_status,
+                                                uint8_t min_valid_track_status_value,
+                                                RgbPixel tracked_color,
+                                                RgbPixel untracked_color,
+                                                RgbPixel flow_line_color) {
     RgbImage show_image;
     DrawImageWithTrackedFeatures(cur_image, ref_pixel_uv, cur_pixel_uv, track_status, min_valid_track_status_value,
         tracked_color, untracked_color, flow_line_color, show_image);
@@ -52,14 +52,14 @@ void Visualizor2D::ShowImageWithTrackedFeatures(const std::string &window_title,
 }
 
 void Visualizor2D::DrawImageWithTrackedFeatures(const GrayImage &cur_image,
-                                              const std::vector<Vec2> &ref_pixel_uv,
-                                              const std::vector<Vec2> &cur_pixel_uv,
-                                              const std::vector<uint8_t> &track_status,
-                                              uint8_t min_valid_track_status_value,
-                                              RgbPixel tracked_color,
-                                              RgbPixel untracked_color,
-                                              RgbPixel flow_line_color,
-                                              RgbImage &show_image) {
+                                                const std::vector<Vec2> &ref_pixel_uv,
+                                                const std::vector<Vec2> &cur_pixel_uv,
+                                                const std::vector<uint8_t> &track_status,
+                                                uint8_t min_valid_track_status_value,
+                                                RgbPixel tracked_color,
+                                                RgbPixel untracked_color,
+                                                RgbPixel flow_line_color,
+                                                RgbImage &show_image) {
     RETURN_IF(cur_image.data() == nullptr);
     RETURN_IF(ref_pixel_uv.size() != cur_pixel_uv.size() || cur_pixel_uv.size() != track_status.size());
 
@@ -80,14 +80,14 @@ void Visualizor2D::DrawImageWithTrackedFeatures(const GrayImage &cur_image,
 }
 
 void Visualizor2D::ShowImageWithTrackedFeatures(const std::string &window_title,
-                                              const GrayImage &ref_image,
-                                              const GrayImage &cur_image,
-                                              const std::vector<Vec2> &ref_pixel_uv,
-                                              const std::vector<Vec2> &cur_pixel_uv,
-                                              const std::vector<uint8_t> &track_status,
-                                              uint8_t min_valid_track_status_value,
-                                              RgbPixel tracked_color,
-                                              RgbPixel untracked_color) {
+                                                const GrayImage &ref_image,
+                                                const GrayImage &cur_image,
+                                                const std::vector<Vec2> &ref_pixel_uv,
+                                                const std::vector<Vec2> &cur_pixel_uv,
+                                                const std::vector<uint8_t> &track_status,
+                                                uint8_t min_valid_track_status_value,
+                                                RgbPixel tracked_color,
+                                                RgbPixel untracked_color) {
     RgbImage show_image;
     DrawImageWithTrackedFeatures(ref_image, cur_image, ref_pixel_uv, cur_pixel_uv, track_status,
         min_valid_track_status_value, tracked_color, untracked_color, show_image);
@@ -95,14 +95,14 @@ void Visualizor2D::ShowImageWithTrackedFeatures(const std::string &window_title,
 }
 
 void Visualizor2D::DrawImageWithTrackedFeatures(const GrayImage &ref_image,
-                                              const GrayImage &cur_image,
-                                              const std::vector<Vec2> &ref_pixel_uv,
-                                              const std::vector<Vec2> &cur_pixel_uv,
-                                              const std::vector<uint8_t> &track_status,
-                                              uint8_t min_valid_track_status_value,
-                                              RgbPixel tracked_color,
-                                              RgbPixel untracked_color,
-                                              RgbImage &show_image) {
+                                                const GrayImage &cur_image,
+                                                const std::vector<Vec2> &ref_pixel_uv,
+                                                const std::vector<Vec2> &cur_pixel_uv,
+                                                const std::vector<uint8_t> &track_status,
+                                                uint8_t min_valid_track_status_value,
+                                                RgbPixel tracked_color,
+                                                RgbPixel untracked_color,
+                                                RgbImage &show_image) {
     RETURN_IF(ref_image.data() == nullptr || cur_image.data() == nullptr);
     RETURN_IF(ref_image.rows() != cur_image.rows() || ref_image.cols() != cur_image.cols());
     RETURN_IF(ref_pixel_uv.size() != cur_pixel_uv.size() || cur_pixel_uv.size() != track_status.size());
@@ -150,16 +150,16 @@ void Visualizor2D::DrawImageWithTrackedFeatures(const GrayImage &ref_image,
 }
 
 void Visualizor2D::ShowImageWithTrackedFeaturesWithId(const std::string &window_title,
-                                                    const GrayImage &ref_image,
-                                                    const GrayImage &cur_image,
-                                                    const std::vector<Vec2> &ref_pixel_uv,
-                                                    const std::vector<Vec2> &cur_pixel_uv,
-                                                    const std::vector<uint32_t> &ref_ids,
-                                                    const std::vector<uint32_t> &cur_ids,
-                                                    const std::vector<uint8_t> &tracked_status,
-                                                    uint8_t min_valid_track_status_value,
-                                                    const std::vector<uint32_t> &ref_tracked_cnt,
-                                                    const std::vector<Vec2> &cur_optical_velocity) {
+                                                      const GrayImage &ref_image,
+                                                      const GrayImage &cur_image,
+                                                      const std::vector<Vec2> &ref_pixel_uv,
+                                                      const std::vector<Vec2> &cur_pixel_uv,
+                                                      const std::vector<uint32_t> &ref_ids,
+                                                      const std::vector<uint32_t> &cur_ids,
+                                                      const std::vector<uint8_t> &tracked_status,
+                                                      uint8_t min_valid_track_status_value,
+                                                      const std::vector<uint32_t> &ref_tracked_cnt,
+                                                      const std::vector<Vec2> &cur_optical_velocity) {
     RgbImage show_image;
     DrawImageWithTrackedFeaturesWithId(ref_image, cur_image, ref_pixel_uv, cur_pixel_uv, ref_ids, cur_ids,
         tracked_status, min_valid_track_status_value, ref_tracked_cnt, cur_optical_velocity, show_image);
@@ -168,16 +168,16 @@ void Visualizor2D::ShowImageWithTrackedFeaturesWithId(const std::string &window_
 }
 
 void Visualizor2D::DrawImageWithTrackedFeaturesWithId(const GrayImage &ref_image,
-                                                    const GrayImage &cur_image,
-                                                    const std::vector<Vec2> &ref_pixel_uv,
-                                                    const std::vector<Vec2> &cur_pixel_uv,
-                                                    const std::vector<uint32_t> &ref_ids,
-                                                    const std::vector<uint32_t> &cur_ids,
-                                                    const std::vector<uint8_t> &tracked_status,
-                                                    uint8_t min_valid_track_status_value,
-                                                    const std::vector<uint32_t> &ref_tracked_cnt,
-                                                    const std::vector<Vec2> &cur_optical_velocity,
-                                                    RgbImage &show_image) {
+                                                      const GrayImage &cur_image,
+                                                      const std::vector<Vec2> &ref_pixel_uv,
+                                                      const std::vector<Vec2> &cur_pixel_uv,
+                                                      const std::vector<uint32_t> &ref_ids,
+                                                      const std::vector<uint32_t> &cur_ids,
+                                                      const std::vector<uint8_t> &tracked_status,
+                                                      uint8_t min_valid_track_status_value,
+                                                      const std::vector<uint32_t> &ref_tracked_cnt,
+                                                      const std::vector<Vec2> &cur_optical_velocity,
+                                                      RgbImage &show_image) {
     RETURN_IF(ref_image.data() == nullptr || cur_image.data() == nullptr);
     RETURN_IF(ref_image.rows() != cur_image.rows() || ref_image.cols() != cur_image.cols());
     RETURN_IF(ref_pixel_uv.size() != ref_ids.size() || cur_pixel_uv.size() != cur_ids.size());
@@ -213,24 +213,24 @@ void Visualizor2D::DrawImageWithTrackedFeaturesWithId(const GrayImage &ref_image
 }
 
 void Visualizor2D::ShowImageWithTrackedFeaturesWithId(const std::string &window_title,
-                                                    const GrayImage &ref_image_left,
-                                                    const GrayImage &ref_image_right,
-                                                    const GrayImage &cur_image_left,
-                                                    const GrayImage &cur_image_right,
-                                                    const std::vector<Vec2> &ref_pixel_uv_left,
-                                                    const std::vector<Vec2> &ref_pixel_uv_right,
-                                                    const std::vector<Vec2> &cur_pixel_uv_left,
-                                                    const std::vector<Vec2> &cur_pixel_uv_right,
-                                                    const std::vector<uint32_t> &ref_ids_left,
-                                                    const std::vector<uint32_t> &ref_ids_right,
-                                                    const std::vector<uint32_t> &cur_ids_left,
-                                                    const std::vector<uint32_t> &cur_ids_right,
-                                                    const std::vector<uint8_t> &frame_tracked_status,
-                                                    const std::vector<uint8_t> &ref_stereo_tracked_status,
-                                                    const std::vector<uint8_t> &cur_stereo_tracked_status,
-                                                    uint8_t min_valid_track_status_value,
-                                                    const std::vector<uint32_t> &ref_tracked_cnt,
-                                                    const std::vector<Vec2> &cur_optical_velocity) {
+                                                      const GrayImage &ref_image_left,
+                                                      const GrayImage &ref_image_right,
+                                                      const GrayImage &cur_image_left,
+                                                      const GrayImage &cur_image_right,
+                                                      const std::vector<Vec2> &ref_pixel_uv_left,
+                                                      const std::vector<Vec2> &ref_pixel_uv_right,
+                                                      const std::vector<Vec2> &cur_pixel_uv_left,
+                                                      const std::vector<Vec2> &cur_pixel_uv_right,
+                                                      const std::vector<uint32_t> &ref_ids_left,
+                                                      const std::vector<uint32_t> &ref_ids_right,
+                                                      const std::vector<uint32_t> &cur_ids_left,
+                                                      const std::vector<uint32_t> &cur_ids_right,
+                                                      const std::vector<uint8_t> &frame_tracked_status,
+                                                      const std::vector<uint8_t> &ref_stereo_tracked_status,
+                                                      const std::vector<uint8_t> &cur_stereo_tracked_status,
+                                                      uint8_t min_valid_track_status_value,
+                                                      const std::vector<uint32_t> &ref_tracked_cnt,
+                                                      const std::vector<Vec2> &cur_optical_velocity) {
     RgbImage show_image;
     DrawImageWithTrackedFeaturesWithId(ref_image_left, ref_image_right, cur_image_left, cur_image_right,
         ref_pixel_uv_left, ref_pixel_uv_right, cur_pixel_uv_left, cur_pixel_uv_right,
@@ -242,24 +242,24 @@ void Visualizor2D::ShowImageWithTrackedFeaturesWithId(const std::string &window_
 }
 
 void Visualizor2D::DrawImageWithTrackedFeaturesWithId(const GrayImage &ref_image_left,
-                                                    const GrayImage &ref_image_right,
-                                                    const GrayImage &cur_image_left,
-                                                    const GrayImage &cur_image_right,
-                                                    const std::vector<Vec2> &ref_pixel_uv_left,
-                                                    const std::vector<Vec2> &ref_pixel_uv_right,
-                                                    const std::vector<Vec2> &cur_pixel_uv_left,
-                                                    const std::vector<Vec2> &cur_pixel_uv_right,
-                                                    const std::vector<uint32_t> &ref_ids_left,
-                                                    const std::vector<uint32_t> &ref_ids_right,
-                                                    const std::vector<uint32_t> &cur_ids_left,
-                                                    const std::vector<uint32_t> &cur_ids_right,
-                                                    const std::vector<uint8_t> &frame_tracked_status,
-                                                    const std::vector<uint8_t> &ref_stereo_tracked_status,
-                                                    const std::vector<uint8_t> &cur_stereo_tracked_status,
-                                                    uint8_t min_valid_track_status_value,
-                                                    const std::vector<uint32_t> &ref_tracked_cnt,
-                                                    const std::vector<Vec2> &cur_optical_velocity,
-                                                    RgbImage &show_image) {
+                                                      const GrayImage &ref_image_right,
+                                                      const GrayImage &cur_image_left,
+                                                      const GrayImage &cur_image_right,
+                                                      const std::vector<Vec2> &ref_pixel_uv_left,
+                                                      const std::vector<Vec2> &ref_pixel_uv_right,
+                                                      const std::vector<Vec2> &cur_pixel_uv_left,
+                                                      const std::vector<Vec2> &cur_pixel_uv_right,
+                                                      const std::vector<uint32_t> &ref_ids_left,
+                                                      const std::vector<uint32_t> &ref_ids_right,
+                                                      const std::vector<uint32_t> &cur_ids_left,
+                                                      const std::vector<uint32_t> &cur_ids_right,
+                                                      const std::vector<uint8_t> &frame_tracked_status,
+                                                      const std::vector<uint8_t> &ref_stereo_tracked_status,
+                                                      const std::vector<uint8_t> &cur_stereo_tracked_status,
+                                                      uint8_t min_valid_track_status_value,
+                                                      const std::vector<uint32_t> &ref_tracked_cnt,
+                                                      const std::vector<Vec2> &cur_optical_velocity,
+                                                      RgbImage &show_image) {
     RETURN_IF(ref_image_left.rows() != cur_image_left.rows() || ref_image_left.cols() != cur_image_left.cols());
     RETURN_IF(ref_image_right.rows() != cur_image_right.rows() || ref_image_right.cols() != cur_image_right.cols());
     RETURN_IF(ref_pixel_uv_left.size() != ref_ids_left.size());
@@ -316,12 +316,12 @@ void Visualizor2D::DrawImageWithTrackedFeaturesWithId(const GrayImage &ref_image
 }
 
 void Visualizor2D::DrawFeaturesWithIdByTrackedNumbers(const std::vector<Vec2> &pixel_uv,
-                                                    const std::vector<uint32_t> &ids,
-                                                    const Pixel &pixel_offset,
-                                                    const std::vector<uint8_t> &status,
-                                                    const uint8_t min_valid_status_value,
-                                                    const std::vector<uint32_t> &tracked_cnt,
-                                                    RgbImage &image) {
+                                                      const std::vector<uint32_t> &ids,
+                                                      const Pixel &pixel_offset,
+                                                      const std::vector<uint8_t> &status,
+                                                      const uint8_t min_valid_status_value,
+                                                      const std::vector<uint32_t> &tracked_cnt,
+                                                      RgbImage &image) {
     if (pixel_uv.size() == tracked_cnt.size()) {
         // If tracked cnt of reference features is valid, draw features with different color.
         for (uint32_t i = 0; i < pixel_uv.size(); ++i) {
@@ -347,12 +347,12 @@ void Visualizor2D::DrawFeaturesWithIdByTrackedNumbers(const std::vector<Vec2> &p
 }
 
 void Visualizor2D::DrawFeaturesWithIdByOpticalVelocity(const std::vector<Vec2> &pixel_uv,
-                                                     const std::vector<uint32_t> &ids,
-                                                     const Pixel &pixel_offset,
-                                                     const std::vector<uint8_t> &status,
-                                                     const uint8_t min_valid_status_value,
-                                                     const std::vector<Vec2> &optical_velocity,
-                                                     RgbImage &image) {
+                                                       const std::vector<uint32_t> &ids,
+                                                       const Pixel &pixel_offset,
+                                                       const std::vector<uint8_t> &status,
+                                                       const uint8_t min_valid_status_value,
+                                                       const std::vector<Vec2> &optical_velocity,
+                                                       RgbImage &image) {
     const RgbPixel pixel_color = RgbColor::kCyan;
 
     if (pixel_uv.size() == optical_velocity.size()) {
