@@ -2,35 +2,35 @@ aux_source_directory( . AUX_SRC_2D_VISUALIZOR )
 
 # Add some components of slam utility.
 set( SLAM_UTILITY_PATH ${PROJECT_SOURCE_DIR}/../Slam_Utility )
-if ( NOT TARGET lib_slam_utility_basic_type )
+if( NOT TARGET lib_slam_utility_basic_type )
     add_subdirectory( ${SLAM_UTILITY_PATH}/src/basic_type ${PROJECT_SOURCE_DIR}/build/lib_slam_utility_basic_type )
 endif()
-if ( NOT TARGET lib_slam_utility_log )
+if( NOT TARGET lib_slam_utility_log )
     add_subdirectory( ${SLAM_UTILITY_PATH}/src/log ${PROJECT_SOURCE_DIR}/build/lib_slam_utility_log )
 endif()
-if ( NOT TARGET lib_slam_utility_memory )
+if( NOT TARGET lib_slam_utility_memory )
     add_subdirectory( ${SLAM_UTILITY_PATH}/src/memory ${PROJECT_SOURCE_DIR}/build/lib_slam_utility_memory )
 endif()
-if ( NOT TARGET lib_slam_utility_operate )
+if( NOT TARGET lib_slam_utility_operate )
     add_subdirectory( ${SLAM_UTILITY_PATH}/src/operate ${PROJECT_SOURCE_DIR}/build/lib_slam_utility_operate )
 endif()
 
 # Add all relative components of slam utility data type.
-if ( NOT TARGET lib_image )
+if( NOT TARGET lib_image )
     add_subdirectory( ${SLAM_UTILITY_PATH}/src/data_type/image ${PROJECT_SOURCE_DIR}/build/lib_image )
 endif()
 
 # Add image painter.
 set( IMAGE_PAINTER_PATH ${PROJECT_SOURCE_DIR}/../Image_Painter )
-if ( NOT TARGET lib_image_painter )
+if( NOT TARGET lib_image_painter )
     add_subdirectory( ${IMAGE_PAINTER_PATH}/src ${PROJECT_SOURCE_DIR}/build/lib_image_painter )
 endif()
 
 # Add dependence for visualizor.
-if ( NOT TARGET lib_visualize_base_glad_khr )
+if( NOT TARGET lib_visualize_base_glad_khr )
     add_subdirectory( glad+khr ${PROJECT_SOURCE_DIR}/build/lib_visualize_base_glad_khr )
 endif()
-if ( NOT TARGET lib_visualize_base_stb )
+if( NOT TARGET lib_visualize_base_stb )
     add_subdirectory( stb_image ${PROJECT_SOURCE_DIR}/build/lib_visualize_base_stb )
 endif()
 
