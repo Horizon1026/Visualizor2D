@@ -45,9 +45,6 @@ bool Visualizor2D::ShowImage(const std::string &window_title, const T &image, bo
 
         Visualizor2D::CreateTextureByImage<T>(image, window->texture_id);
 
-        glColor3f(1.0f, 1.0f, 1.0f);
-        glfwHideWindow(window->glfw_window);
-
     } else {
         // Exist window. Only change its texture.
         VisualizorWindow *window = GetWindowPointer(window_title, image.cols(), image.rows());
