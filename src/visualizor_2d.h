@@ -29,6 +29,13 @@ public:
     virtual ~Visualizor2D();
     static Visualizor2D &GetInstance();
 
+    // Support for matrix visualization.
+    static void ShowMatrix(const std::string &window_title,
+                           const Mat &matrix,
+                           int32_t delay_ms = 1,
+                           float max_value = 1e-2f,
+                           int32_t scale = 4);
+
     // Support for feature tracking result visualization.
     static void ShowImageWithDetectedFeatures(const std::string &window_title,
                                               const GrayImage &image,
