@@ -58,7 +58,7 @@ bool Visualizor2D::ShowImage(const std::string &window_title, const T &image, bo
 
 void Visualizor2D::WaitKey(int32_t delay_ms) {
     // Display add window hidden in ShowImage().
-    for (const auto &item : Visualizor2D::windows_) {
+    for (const auto &item: Visualizor2D::windows_) {
         const auto &glfw_window = item.second.glfw_window;
         if (!glfwWindowShouldClose(glfw_window)) {
             // If this window is already shown, do not focus on it.
@@ -73,7 +73,7 @@ void Visualizor2D::WaitKey(int32_t delay_ms) {
 
     while (!Visualizor2D::windows_.empty()) {
         uint32_t closed_window_cnt = 0;
-        for (const auto &item : Visualizor2D::windows_) {
+        for (const auto &item: Visualizor2D::windows_) {
             const auto &window = item.second;
 
             if (!glfwWindowShouldClose(window.glfw_window)) {
@@ -165,7 +165,7 @@ void Visualizor2D::ShowTextureInCurrentWindow(GLuint texture_id) {
 
 void Visualizor2D::WindowList() {
     ReportInfo("[Visualizor] All stored window.");
-    for (auto &item : Visualizor2D::windows_) {
+    for (auto &item: Visualizor2D::windows_) {
         ReportInfo(">> window title " << item.first);
         ReportInfo("   window ptr " << item.second.glfw_window);
         ReportInfo("   window texture " << item.second.texture_id);
