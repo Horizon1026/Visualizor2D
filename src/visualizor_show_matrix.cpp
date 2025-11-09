@@ -4,9 +4,9 @@
 #include "slam_operations.h"
 #include "visualizor_2d.h"
 
-using namespace IMAGE_PAINTER;
+using namespace image_painter;
 
-namespace SLAM_VISUALIZOR {
+namespace slam_visualizor {
 
 void Visualizor2D::ShowMatrix(const std::string &window_title, const Mat &matrix, int32_t delay_ms, float max_value, int32_t scale) {
     uint8_t *buf = (uint8_t *)malloc(matrix.rows() * matrix.cols() * scale * scale * sizeof(uint8_t));
@@ -16,4 +16,4 @@ void Visualizor2D::ShowMatrix(const std::string &window_title, const Mat &matrix
     Visualizor2D::WaitKey(delay_ms);
 }
 
-}  // namespace SLAM_VISUALIZOR
+}  // namespace slam_visualizor

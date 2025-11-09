@@ -4,9 +4,9 @@
 #include "slam_operations.h"
 #include "visualizor_2d.h"
 
-using namespace IMAGE_PAINTER;
+using namespace image_painter;
 
-namespace SLAM_VISUALIZOR {
+namespace slam_visualizor {
 
 namespace {
     constexpr float kStringLocationColOffset = 3.0f;
@@ -307,4 +307,4 @@ void Visualizor2D::DrawFeaturesWithIdByOpticalVelocity(const std::vector<Vec2> &
     }
 }
 
-}  // namespace SLAM_VISUALIZOR
+}  // namespace slam_visualizor

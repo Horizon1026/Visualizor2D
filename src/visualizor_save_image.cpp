@@ -6,9 +6,9 @@
 #define STB_IMAGE_WRITE_IMPLEMENTATION
 #include "stb_image_write.h"
 
-using namespace IMAGE_PAINTER;
+using namespace image_painter;
 
-namespace SLAM_VISUALIZOR {
+namespace slam_visualizor {
 
 template <>
 bool Visualizor2D::SaveImage<GrayImage>(const std::string &image_file, const GrayImage &image) {
@@ -48,4 +48,4 @@ bool Visualizor2D::SaveToPngImageData<RgbImage>(const RgbImage &image, std::vect
     return true;
 }
 
-}  // namespace SLAM_VISUALIZOR
+}  // namespace slam_visualizor

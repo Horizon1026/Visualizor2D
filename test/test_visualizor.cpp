@@ -10,9 +10,9 @@
 #include "iostream"
 #include "vector"
 
-using namespace SLAM_UTILITY;
-using namespace SLAM_VISUALIZOR;
-using namespace IMAGE_PAINTER;
+using namespace slam_utility;
+using namespace slam_visualizor;
+using namespace image_painter;
 
 namespace {
 constexpr int32_t kScale = 3;

@@ -3,7 +3,7 @@
 #include "slam_memory.h"
 #include "slam_operations.h"
 
-namespace SLAM_VISUALIZOR {
+namespace slam_visualizor {
 
 std::map<std::string, VisualizorWindow> Visualizor2D::windows_;
 bool Visualizor2D::some_key_pressed_ = false;
@@ -50,4 +50,4 @@ VisualizorWindow *Visualizor2D::GetWindowPointer(const std::string &title, int32
     }
 }
 
-}  // namespace SLAM_VISUALIZOR
+}  // namespace slam_visualizor

@@ -12,7 +12,7 @@
 #include "string.h"
 #include "time.h"
 
-namespace SLAM_VISUALIZOR {
+namespace slam_visualizor {
 
 struct VisualizorWindow {
     GLFWwindow *glfw_window = nullptr;
@@ -126,6 +126,6 @@ private:
     static bool some_key_pressed_;
 };
 
-}  // namespace SLAM_VISUALIZOR
+}  // namespace slam_visualizor
 
 #endif  // end of _SLAM_UTILITY_IMAGE_VISUALIZOR_H_

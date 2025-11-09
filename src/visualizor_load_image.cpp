@@ -5,9 +5,9 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 
-using namespace IMAGE_PAINTER;
+using namespace image_painter;
 
-namespace SLAM_VISUALIZOR {
+namespace slam_visualizor {
 
 template <>
 bool Visualizor2D::LoadImage<GrayImage>(const std::string &image_file, GrayImage &image) {
@@ -153,4 +153,4 @@ bool Visualizor2D::LoadFromPngImageData<RgbImage>(const std::vector<uint8_t> &pn
     return true;
 }
 
-}  // namespace SLAM_VISUALIZOR
+}  // namespace slam_visualizor
