@@ -1,7 +1,7 @@
 #include "visualizor_2d.h"
+#include "slam_log_reporter.h"
 #include "slam_memory.h"
 #include "slam_operations.h"
-#include "slam_log_reporter.h"
 
 namespace SLAM_VISUALIZOR {
 
@@ -19,9 +19,7 @@ Visualizor2D::~Visualizor2D() {
     glfwTerminate();
 }
 
-void Visualizor2D::ErrorCallback(int32_t error, const char *description) {
-    ReportError("[Visualizor] Error detected :" << description);
-}
+void Visualizor2D::ErrorCallback(int32_t error, const char *description) { ReportError("[Visualizor] Error detected :" << description); }
 
 void Visualizor2D::KeyboardCallback(GLFWwindow *window, int32_t key, int32_t scan_code, int32_t action, int32_t mods) {
     if (action == GLFW_PRESS && key == GLFW_KEY_ESCAPE) {
@@ -52,4 +50,4 @@ VisualizorWindow *Visualizor2D::GetWindowPointer(const std::string &title, int32
     }
 }
 
-}
+}  // namespace SLAM_VISUALIZOR

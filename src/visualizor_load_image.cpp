@@ -1,6 +1,6 @@
-#include "visualizor_2d.h"
 #include "image_painter.h"
 #include "slam_memory.h"
+#include "visualizor_2d.h"
 
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
@@ -153,4 +153,4 @@ bool Visualizor2D::LoadFromPngImageData<RgbImage>(const std::vector<uint8_t> &pn
     return true;
 }
 
-}
+}  // namespace SLAM_VISUALIZOR

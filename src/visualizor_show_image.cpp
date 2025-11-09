@@ -1,8 +1,8 @@
-#include "visualizor_2d.h"
 #include "image_painter.h"
 #include "slam_log_reporter.h"
 #include "slam_memory.h"
 #include "slam_operations.h"
+#include "visualizor_2d.h"
 
 #include "unistd.h"
 
@@ -101,11 +101,13 @@ void Visualizor2D::WaitKey(int32_t delay_ms) {
     Visualizor2D::some_key_pressed_ = false;
 }
 
-template <> void Visualizor2D::PreprocessImage<GrayImage>(const GrayImage &image, uint8_t *buff) {
+template <>
+void Visualizor2D::PreprocessImage<GrayImage>(const GrayImage &image, uint8_t *buff) {
     ImagePainter::ConvertUint8ToRgbAndUpsideDown(image.data(), buff, image.rows(), image.cols());
 }
 
-template <> void Visualizor2D::PreprocessImage<RgbImage>(const RgbImage &image, uint8_t *buff) {
+template <>
+void Visualizor2D::PreprocessImage<RgbImage>(const RgbImage &image, uint8_t *buff) {
     ImagePainter::ConvertRgbToBgrAndUpsideDown(image.data(), buff, image.rows(), image.cols());
 }
 
@@ -173,4 +175,4 @@ void Visualizor2D::WindowList() {
     }
 }
 
-}
+}  // namespace SLAM_VISUALIZOR

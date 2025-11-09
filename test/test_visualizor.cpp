@@ -1,24 +1,24 @@
 #include "basic_type.h"
 #include "datatype_image.h"
 #include "image_painter.h"
-#include "visualizor_2d.h"
 #include "slam_log_reporter.h"
 #include "slam_operations.h"
+#include "visualizor_2d.h"
 
-#include "iostream"
-#include "dirent.h"
-#include "vector"
 #include "cstring"
+#include "dirent.h"
+#include "iostream"
+#include "vector"
 
 using namespace SLAM_UTILITY;
 using namespace SLAM_VISUALIZOR;
 using namespace IMAGE_PAINTER;
 
 namespace {
-    constexpr int32_t kScale = 3;
-    constexpr int32_t kMatrixRow = 90;
-    constexpr int32_t kMatrixCol = 180;
-}
+constexpr int32_t kScale = 3;
+constexpr int32_t kMatrixRow = 90;
+constexpr int32_t kMatrixCol = 180;
+}  // namespace
 
 void TestVisualizorStatic() {
     ReportInfo(YELLOW ">> Test visualizor show static image." RESET_COLOR);

@@ -1,7 +1,7 @@
-#include "visualizor_2d.h"
 #include "image_painter.h"
 #include "slam_memory.h"
 #include "slam_operations.h"
+#include "visualizor_2d.h"
 
 #define STB_IMAGE_WRITE_IMPLEMENTATION
 #include "stb_image_write.h"
@@ -48,4 +48,4 @@ bool Visualizor2D::SaveToPngImageData<RgbImage>(const RgbImage &image, std::vect
     return true;
 }
 
-}
+}  // namespace SLAM_VISUALIZOR
