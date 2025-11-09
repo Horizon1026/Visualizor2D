@@ -3542,3 +3542,5 @@ GLAPI PFNGLGETNMINMAXARBPROC glad_glGetnMinmaxARB;
 #endif
 
 #endif
+
+#include "GLFW/glfw3.h"

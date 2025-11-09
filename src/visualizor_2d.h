@@ -5,10 +5,7 @@
 #include "datatype_image.h"
 #include "slam_log_reporter.h"
 
-// Dependence.
-#include "GLFW/glfw3.h"
 #include "glad.h"
-
 #include "stdbool.h"
 #include "stdio.h"
 #include "stdlib.h"
