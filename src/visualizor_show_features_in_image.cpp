@@ -108,9 +108,7 @@ void Visualizor2D::DrawImageWithTrackedFeatures(const GrayImage &ref_image, cons
         CONTINUE_IF(track_status[i] > min_valid_track_status_value);
         ImagePainter::DrawSolidCircle(show_image, cur_pixel_uv[i].x() + cur_image.cols(), cur_pixel_uv[i].y(), 3, tracked_color);
         ImagePainter::DrawBressenhanLine(show_image, ref_pixel_uv[i].x(), ref_pixel_uv[i].y(), cur_pixel_uv[i].x() + cur_image.cols(), cur_pixel_uv[i].y(),
-                                         RgbPixel {.r = static_cast<uint8_t>(std::rand() % 256),
-                                                   .g = static_cast<uint8_t>(std::rand() % 256),
-                                                   .b = static_cast<uint8_t>(std::rand() % 256)});
+                                         RgbColor::Palette(i));
     }
 
     // Draw reference points.
