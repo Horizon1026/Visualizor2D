@@ -39,7 +39,7 @@ bool Visualizor2D::ShowImage(const std::string &window_title, const T &image, bo
         glfwMakeContextCurrent(window->glfw_window);
 
         gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
-        glfwSwapInterval(1);
+        glfwSwapInterval(0);
         glfwShowWindow(window->glfw_window);
         glfwSetKeyCallback(window->glfw_window, Visualizor2D::KeyboardCallback);
 
