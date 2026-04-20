@@ -10,9 +10,15 @@ A simple mage visualizor for SLAM.
 - [ ] Image save.
 
 # Dependence
+
+### Project repositories
 - Slam_Utility
 - Image_Painter
-- glfw3
+
+### Third-party repositories
+- glfw3（`sudo apt install libglfw3-dev`）
+- Eigen3 (>= 3.3.7)（`sudo apt install libeigen3-dev`）
+- dw (`sudo apt install libdw-dev`)
 
 # Compile and Run
 - 第三方仓库的话需要自行 apt-get install 安装
