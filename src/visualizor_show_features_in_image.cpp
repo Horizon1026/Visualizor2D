@@ -11,6 +11,7 @@ namespace slam_visualizor {
 namespace {
     constexpr float kStringLocationColOffset = 3.0f;
     constexpr float kStringLocationRowOffset = -12.0f;
+    constexpr int32_t kUntrackedRefBoxHalfSize = 2;
 }  // namespace
 
 void Visualizor2D::ShowImageWithDetectedFeatures(const std::string &window_title, const GrayImage &image, const std::vector<Vec2> &pixel_uv, RgbPixel color) {
@@ -111,9 +112,18 @@ void Visualizor2D::DrawImageWithTrackedFeatures(const GrayImage &ref_image, cons
                                          RgbColor::Palette(i));
     }
 
-    // Draw reference points.
+    // Draw reference points: tracked = circle, unmatched = red hollow box.
     for (uint32_t i = 0; i < ref_pixel_uv.size(); ++i) {
-        ImagePainter::DrawSolidCircle(show_image, ref_pixel_uv[i].x(), ref_pixel_uv[i].y(), 3, tracked_color);
+        const int32_t center_x = static_cast<int32_t>(ref_pixel_uv[i].x());
+        const int32_t center_y = static_cast<int32_t>(ref_pixel_uv[i].y());
+        if (track_status[i] > min_valid_track_status_value) {
+            const int32_t box_x = center_x - kUntrackedRefBoxHalfSize;
+            const int32_t box_y = center_y - kUntrackedRefBoxHalfSize;
+            const int32_t box_size = kUntrackedRefBoxHalfSize * 2;
+            ImagePainter::DrawHollowRectangle(show_image, box_x, box_y, box_size, box_size, untracked_color);
+        } else {
+            ImagePainter::DrawSolidCircle(show_image, ref_pixel_uv[i].x(), ref_pixel_uv[i].y(), 3, tracked_color);
+        }
     }
 }
 
