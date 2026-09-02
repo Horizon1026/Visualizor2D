@@ -1,12 +1,13 @@
+#include "visualizor_2d.h"
+
 #include "basic_type.h"
 #include "datatype_image.h"
 #include "image_painter.h"
 #include "slam_log_reporter.h"
 #include "slam_operations.h"
-#include "visualizor_2d.h"
+#include "dirent.h"
 
 #include "cstring"
-#include "dirent.h"
 #include "iostream"
 #include "vector"
 

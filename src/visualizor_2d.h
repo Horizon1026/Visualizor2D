@@ -4,8 +4,8 @@
 #include "basic_type.h"
 #include "datatype_image.h"
 #include "slam_log_reporter.h"
-
 #include "glad.h"
+
 #include "stdbool.h"
 #include "stdio.h"
 #include "stdlib.h"

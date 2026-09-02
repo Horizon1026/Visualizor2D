@@ -1,10 +1,10 @@
+#include "visualizor_2d.h"
+
 #include "image_painter.h"
 #include "slam_memory.h"
-#include "visualizor_2d.h"
 
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
-
 using namespace image_painter;
 
 namespace slam_visualizor {
