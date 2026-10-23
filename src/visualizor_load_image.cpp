@@ -23,6 +23,13 @@ bool Visualizor2D::LoadImage<GrayImage>(const std::string &image_file, GrayImage
     const int32_t size = width * height;
     uint8_t *gray_data = (uint8_t *)SlamMemory::Malloc(size * sizeof(uint8_t));
     switch (channel) {
+        case 4: {
+            // If image is RGBA, discard alpha channel.
+            for (int32_t i = 0; i < size; ++i) {
+                ImagePainter::ConvertRgbToUint8(raw_data + i * 4, gray_data + i, 1);
+            }
+            break;
+        }
         case 3: {
             ImagePainter::ConvertRgbToUint8(raw_data, gray_data, size);
             break;
@@ -59,6 +66,13 @@ bool Visualizor2D::LoadImage<RgbImage>(const std::string &image_file, RgbImage &
     const int32_t size = width * height * 3;
     uint8_t *rgb_data = (uint8_t *)SlamMemory::Malloc(size * sizeof(uint8_t));
     switch (channel) {
+        case 4: {
+            // If image is RGBA, discard alpha channel.
+            for (int32_t i = 0; i < size / 3; ++i) {
+                std::copy_n(raw_data + i * 4, 3, rgb_data + i * 3);
+            }
+            break;
+        }
         case 3: {
             std::copy_n(raw_data, size, rgb_data);
             break;
@@ -95,6 +109,13 @@ bool Visualizor2D::LoadFromPngImageData<GrayImage>(const std::vector<uint8_t> &p
     const int32_t size = width * height;
     uint8_t *gray_data = (uint8_t *)SlamMemory::Malloc(size * sizeof(uint8_t));
     switch (channel) {
+        case 4: {
+            // If image is RGBA, discard alpha channel.
+            for (int32_t i = 0; i < size; ++i) {
+                ImagePainter::ConvertRgbToUint8(raw_data + i * 4, gray_data + i, 1);
+            }
+            break;
+        }
         case 3: {
             ImagePainter::ConvertRgbToUint8(raw_data, gray_data, size);
             break;
@@ -131,6 +152,13 @@ bool Visualizor2D::LoadFromPngImageData<RgbImage>(const std::vector<uint8_t> &pn
     const int32_t size = width * height * 3;
     uint8_t *rgb_data = (uint8_t *)SlamMemory::Malloc(size * sizeof(uint8_t));
     switch (channel) {
+        case 4: {
+            // If image is RGBA, discard alpha channel.
+            for (int32_t i = 0; i < size / 3; ++i) {
+                std::copy_n(raw_data + i * 4, 3, rgb_data + i * 3);
+            }
+            break;
+        }
         case 3: {
             std::copy_n(raw_data, size, rgb_data);
             break;
