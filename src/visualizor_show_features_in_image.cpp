@@ -28,7 +28,7 @@ void Visualizor2D::DrawImageWithDetectedFeatures(const GrayImage &image, const s
     ImagePainter::ConvertUint8ToRgb(image.data(), show_image.data(), image.rows() * image.cols());
 
     for (uint32_t i = 0; i < pixel_uv.size(); ++i) {
-        ImagePainter::DrawSolidCircle(show_image, pixel_uv[i].x(), pixel_uv[i].y(), 3, color);
+        ImagePainter::DrawSolidCircle(show_image, pixel_uv[i].x(), pixel_uv[i].y(), 3.0f, color);
     }
 }
 
@@ -55,10 +55,10 @@ void Visualizor2D::DrawImageWithTrackedFeatures(const GrayImage &cur_image, cons
 
     for (uint32_t i = 0; i < ref_pixel_uv.size(); ++i) {
         if (track_status[i] > min_valid_track_status_value) {
-            ImagePainter::DrawSolidCircle(show_image, cur_pixel_uv[i].x(), cur_pixel_uv[i].y(), 3, untracked_color);
+            ImagePainter::DrawSolidCircle(show_image, cur_pixel_uv[i].x(), cur_pixel_uv[i].y(), 3.0f, untracked_color);
             continue;
         }
-        ImagePainter::DrawSolidCircle(show_image, cur_pixel_uv[i].x(), cur_pixel_uv[i].y(), 3, tracked_color);
+        ImagePainter::DrawSolidCircle(show_image, cur_pixel_uv[i].x(), cur_pixel_uv[i].y(), 3.0f, tracked_color);
         ImagePainter::DrawBressenhanLine(show_image, ref_pixel_uv[i].x(), ref_pixel_uv[i].y(), cur_pixel_uv[i].x(), cur_pixel_uv[i].y(), flow_line_color);
     }
 }
@@ -101,14 +101,14 @@ void Visualizor2D::DrawImageWithTrackedFeatures(const GrayImage &ref_image, cons
     // Draw untracked current points.
     for (uint32_t i = 0; i < cur_pixel_uv.size(); ++i) {
         if (track_status[i] > min_valid_track_status_value) {
-            ImagePainter::DrawSolidCircle(show_image, cur_pixel_uv[i].x() + cur_image.cols(), cur_pixel_uv[i].y(), 3, untracked_color);
+            ImagePainter::DrawSolidCircle(show_image, cur_pixel_uv[i].x() + cur_image.cols(), cur_pixel_uv[i].y(), 3.0f, untracked_color);
         }
     }
 
     // Draw tracked current points and pairs.
     for (uint32_t i = 0; i < cur_pixel_uv.size(); ++i) {
         CONTINUE_IF(track_status[i] > min_valid_track_status_value);
-        ImagePainter::DrawSolidCircle(show_image, cur_pixel_uv[i].x() + cur_image.cols(), cur_pixel_uv[i].y(), 3, tracked_color);
+        ImagePainter::DrawSolidCircle(show_image, cur_pixel_uv[i].x() + cur_image.cols(), cur_pixel_uv[i].y(), 3.0f, tracked_color);
         ImagePainter::DrawBressenhanLine(show_image, ref_pixel_uv[i].x(), ref_pixel_uv[i].y(), cur_pixel_uv[i].x() + cur_image.cols(), cur_pixel_uv[i].y(),
                                          RgbColor::Palette(i));
     }
@@ -123,7 +123,7 @@ void Visualizor2D::DrawImageWithTrackedFeatures(const GrayImage &ref_image, cons
             const int32_t box_size = kUntrackedRefBoxHalfSize * 2;
             ImagePainter::DrawHollowRectangle(show_image, box_x, box_y, box_size, box_size, untracked_color);
         } else {
-            ImagePainter::DrawSolidCircle(show_image, ref_pixel_uv[i].x(), ref_pixel_uv[i].y(), 3, tracked_color);
+            ImagePainter::DrawSolidCircle(show_image, ref_pixel_uv[i].x(), ref_pixel_uv[i].y(), 3.0f, tracked_color);
         }
     }
 }
@@ -269,7 +269,7 @@ void Visualizor2D::DrawFeaturesWithIdByTrackedNumbers(const std::vector<Vec2> &p
 
             const int32_t color = std::max(static_cast<int32_t>(255 - tracked_cnt[i] * 80), static_cast<int32_t>(0));
             const RgbPixel pixel_color = RgbPixel {.r = 255, .g = static_cast<uint8_t>(255 - color), .b = 0};
-            ImagePainter::DrawSolidCircle(image, pixel_uv[i].x() + pixel_offset.x(), pixel_uv[i].y() + pixel_offset.y(), 3, pixel_color);
+            ImagePainter::DrawSolidCircle(image, pixel_uv[i].x() + pixel_offset.x(), pixel_uv[i].y() + pixel_offset.y(), 3.0f, pixel_color);
             ImagePainter::DrawString(image, std::to_string(ids[i]), pixel_uv[i].x() + kStringLocationColOffset + pixel_offset.x(),
                                      pixel_uv[i].y() + kStringLocationRowOffset + pixel_offset.y(), pixel_color);
         }
@@ -279,7 +279,7 @@ void Visualizor2D::DrawFeaturesWithIdByTrackedNumbers(const std::vector<Vec2> &p
         for (uint32_t i = 0; i < pixel_uv.size(); ++i) {
             CONTINUE_IF(!status.empty() && status[i] > min_valid_status_value);
 
-            ImagePainter::DrawSolidCircle(image, pixel_uv[i].x() + pixel_offset.x(), pixel_uv[i].y() + pixel_offset.y(), 3, pixel_color);
+            ImagePainter::DrawSolidCircle(image, pixel_uv[i].x() + pixel_offset.x(), pixel_uv[i].y() + pixel_offset.y(), 3.0f, pixel_color);
             ImagePainter::DrawString(image, std::to_string(ids[i]), pixel_uv[i].x() + kStringLocationColOffset + pixel_offset.x(),
                                      pixel_uv[i].y() + kStringLocationRowOffset + pixel_offset.y(), pixel_color);
         }
@@ -297,7 +297,7 @@ void Visualizor2D::DrawFeaturesWithIdByOpticalVelocity(const std::vector<Vec2> &
         for (uint32_t i = 0; i < pixel_uv.size(); ++i) {
             CONTINUE_IF(!status.empty() && status[i] > min_valid_status_value);
 
-            ImagePainter::DrawSolidCircle(image, pixel_uv[i].x() + pixel_offset.x(), pixel_uv[i].y() + pixel_offset.y(), 3, pixel_color);
+            ImagePainter::DrawSolidCircle(image, pixel_uv[i].x() + pixel_offset.x(), pixel_uv[i].y() + pixel_offset.y(), 3.0f, pixel_color);
             ImagePainter::DrawString(image, std::to_string(ids[i]), pixel_uv[i].x() + kStringLocationColOffset + pixel_offset.x(),
                                      pixel_uv[i].y() + kStringLocationRowOffset + pixel_offset.y(), pixel_color);
             ImagePainter::DrawBressenhanLine(image, pixel_uv[i].x() + pixel_offset.x(), pixel_uv[i].y() + pixel_offset.y(),
@@ -309,7 +309,7 @@ void Visualizor2D::DrawFeaturesWithIdByOpticalVelocity(const std::vector<Vec2> &
         for (uint32_t i = 0; i < pixel_uv.size(); ++i) {
             CONTINUE_IF(!status.empty() && status[i] > min_valid_status_value);
 
-            ImagePainter::DrawSolidCircle(image, pixel_uv[i].x() + pixel_offset.x(), pixel_uv[i].y() + pixel_offset.y(), 3, pixel_color);
+            ImagePainter::DrawSolidCircle(image, pixel_uv[i].x() + pixel_offset.x(), pixel_uv[i].y() + pixel_offset.y(), 3.0f, pixel_color);
             ImagePainter::DrawString(image, std::to_string(ids[i]), pixel_uv[i].x() + kStringLocationColOffset + pixel_offset.x(),
                                      pixel_uv[i].y() + kStringLocationRowOffset + pixel_offset.y(), pixel_color);
         }
